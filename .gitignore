@@ -1,0 +1,6 @@
+# Carpetas de respaldo (no subir al servidor)
+_img-originales-respaldo/
+_img-no-usadas/
+_archivos-desarrollo/
+_pdf-originales-respaldo/
+.DS_Store
