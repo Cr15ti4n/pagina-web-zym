@@ -105,11 +105,11 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
 .hero-logo{margin:10px auto 0;max-width:min(520px,55vh);aspect-ratio:1.2/1;display:flex;align-items:center;justify-content:center;flex:1}
 .hero-logo svg{width:100%;height:auto}
-.hero-content{display:flex;align-items:center;justify-content:center;gap:24px;max-width:900px;width:100%}
-.hero-content .brand-logo{width:200px;height:200px;flex-shrink:0}
+.hero-content{position:relative;max-width:900px;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:50px}
+.hero-content .brand-logo{position:absolute;top:0;left:0;width:160px;height:160px;flex-shrink:0}
 .hero-content .brand-logo svg{width:100%;height:100%}
-.hero-content .hero-text{text-align:center}
-@media(max-width:600px){.hero-content{flex-direction:column;gap:12px}.hero-content .brand-logo{width:70px;height:70px}}
+.hero-content .hero-text{text-align:center;width:100%}
+@media(max-width:600px){.hero-content{padding-top:80px}.hero-content .brand-logo{width:70px;height:70px}}
 
 @media (prefers-reduced-motion:no-preference){
   .ring-glow{animation:glow 4s ease-in-out infinite}
@@ -377,7 +377,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--line);padding:40px 22px
     <div class="hero-text">
       <p class="t-eyebrow">Grupo Z&amp;M</p>
       <h1 data-i18n="hero_title" data-i18n-html="1">
-        21 años desarrollando infraestructura <span class="accent">en 20 estados.</span>
+        21 años desarrollando<br>infraestructura <span class="accent">en 20 estados.</span>
       </h1>
       <div class="hero-actions">
         <a href="#proyectos" class="btn btn-primary" data-i18n="hero_btn">Ver proyectos</a>
@@ -663,7 +663,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--line);padding:40px 22px
     <article class="proj reveal" data-cat="retail" onclick="openGallery('marchand')" style="cursor:pointer"><img loading="lazy" src="img/marchand/web/imagen-1.webp" alt="Marchand Papelería" width="1343" height="854"><span class="proj-badge">4 proyectos entregados</span><div class="proj-info"><span class="tag">Retail · Tampico</span><h3>Marchand Papelería</h3><span></span></div></article>
     <!-- Fila 12: Wide-izq + normal-der -->
     <article class="proj proj-wide reveal" data-cat="publica" onclick="openGallery('imss')" style="cursor:pointer"><img loading="lazy" src="img/imss/web/whatsapp-image-2026-05-11-at-2.26.59-pm-2.webp" alt="IMSS" width="3865" height="1035"><span class="proj-badge">3 proyectos entregados</span><div class="proj-info"><span class="tag">Pública · Ciudad de México</span><h3>IMSS</h3><span>Aire acondicionado e instalaciones</span></div></article>
-    <article class="proj reveal" data-cat="retail" onclick="openGallery('coppel')" style="cursor:pointer"><img loading="lazy" src="img/coopel/web/imagen-2.webp" alt="Coppel" width="1041" height="756"><span class="proj-badge">1 proyecto entregado</span><div class="proj-info"><span class="tag">Retail</span><h3>Coppel</h3><span></span></div></article>
+    <article class="proj reveal" data-cat="retail" onclick="openGallery('coppel')" style="cursor:pointer"><img loading="lazy" src="img/coopel/web/imagen-7.webp" alt="Coppel" width="1583" height="1018"><span class="proj-badge">1 proyecto entregado</span><div class="proj-info"><span class="tag">Retail</span><h3>Coppel</h3><span></span></div></article>
     <!-- Fila 13: Normal -->
     <article class="proj reveal" data-cat="retail" onclick="openGallery('palaciodehierro')" style="cursor:pointer"><img loading="lazy" src="img/palacio-de-hierro/web/imagen-1.webp" alt="Palacio de Hierro" width="1256" height="1075"><span class="proj-badge">1 proyecto entregado</span><div class="proj-info"><span class="tag">Retail</span><h3>Palacio de Hierro</h3><span></span></div></article>
   </div>
@@ -740,7 +740,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--line);padding:40px 22px
 <section class="contact" id="contacto">
   <div class="contact-inner">
     <div class="reveal">
-      <h2 data-i18n="contact_title">Cuéntanos acerca de tu obra.</h2>
+      <h2 data-i18n="contact_title">Nuestras sucursales</h2>
       <!-- <p class="t-body" style="margin-top:18px;max-width:36ch">Respondemos cotizaciones formales en menos de 72 horas hábiles.</p> -->
       <!-- <div class="contact-info">
         <div><span class="label">Oficina central</span>Av. Insurgentes Sur 1602, piso 9<br>Crédito Constructor, CDMX 03940</div>
@@ -1497,7 +1497,8 @@ const galleries = {
       'img/elektra/web/dsc-0264.webp',
       'img/elektra/web/img-1367.webp',
       'img/elektra/web/img-7143.webp',
-      'img/elektra/web/elecra.webp'
+      'img/elektra/web/elecra.webp',
+      'img/elektra/web/imagen-4.webp'
     ],
     thumbs: [
       'img/elektra/thumbs/imagen-1.webp',
@@ -1522,7 +1523,8 @@ const galleries = {
       'img/elektra/thumbs/dsc-0264.webp',
       'img/elektra/thumbs/img-1367.webp',
       'img/elektra/thumbs/img-7143.webp',
-      'img/elektra/thumbs/elecra.webp'
+      'img/elektra/thumbs/elecra.webp',
+      'img/elektra/thumbs/imagen-4.webp'
     ]
   },
   cinvestav: {
@@ -1732,7 +1734,9 @@ const galleries = {
       'img/coopel/web/imagen-3.webp',
       'img/coopel/web/imagen-4.webp',
       'img/coopel/web/imagen-5.webp',
-      'img/coopel/web/imagen-6.webp'
+      'img/coopel/web/imagen-6.webp',
+      'img/coopel/web/imagen-7.webp',
+      'img/coopel/web/imagen-8.webp'
     ],
     thumbs: [
       'img/coopel/thumbs/imagen-1.webp',
@@ -1740,7 +1744,9 @@ const galleries = {
       'img/coopel/thumbs/imagen-3.webp',
       'img/coopel/thumbs/imagen-4.webp',
       'img/coopel/thumbs/imagen-5.webp',
-      'img/coopel/thumbs/imagen-6.webp'
+      'img/coopel/thumbs/imagen-6.webp',
+      'img/coopel/thumbs/imagen-7.webp',
+      'img/coopel/thumbs/imagen-8.webp'
     ]
   },
   palaciodehierro: {
@@ -1894,7 +1900,7 @@ const i18n = {
     nav_servicios: 'Services',
     nav_clientes: 'Clients',
     nav_contacto: 'Contact',
-    hero_title: '21 years building infrastructure <span class="accent">across 20 states.</span>',
+    hero_title: '21 years building<br>infrastructure <span class="accent">across 20 states.</span>',
     hero_btn: 'View projects',
     nosotros_title: '<span style="display:block;background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.6) 100%);-webkit-background-clip:text;background-clip:text;color:transparent">Three specialists,</span><span style="display:block;background:linear-gradient(135deg,var(--blue),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent">one single group.</span>',
     nosotros_body: 'From foundation to final finishes. We operate with our own engineering team, technical supervision and open cost control for the client.',
@@ -1927,7 +1933,7 @@ const i18n = {
     sector_retail: 'Retail & Private Sector',
     sector_industrial: 'Industrial',
     sector_public: 'Public Sector',
-    contact_title: 'Tell us about your project.',
+    contact_title: 'Our branches',
     footer_desc: 'Mexican construction company with 21 years delivering infrastructure for hospitality, retail, industry and public works.',
     footer_empresa: 'Company',
     footer_capacidades: 'Capabilities',
@@ -1941,7 +1947,7 @@ const i18n = {
     nav_servicios: 'Servicios',
     nav_clientes: 'Clientes',
     nav_contacto: 'Contacto',
-    hero_title: '21 años desarrollando infraestructura <span class="accent">en 20 estados.</span>',
+    hero_title: '21 años desarrollando<br>infraestructura <span class="accent">en 20 estados.</span>',
     hero_btn: 'Ver proyectos',
     nosotros_title: '<span style="display:block;background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.6) 100%);-webkit-background-clip:text;background-clip:text;color:transparent">Tres especialistas,</span><span style="display:block;background:linear-gradient(135deg,var(--blue),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent">un solo grupo.</span>',
     nosotros_body: 'Desde la cimentación hasta el último acabado. Operamos con equipo propio de ingeniería, supervisión técnica y control de costos abierto al cliente.',
@@ -1974,7 +1980,7 @@ const i18n = {
     sector_retail: 'Retail & Sector Privado',
     sector_industrial: 'Industrial',
     sector_public: 'Sector Público',
-    contact_title: 'Cuéntanos acerca de tu obra.',
+    contact_title: 'Nuestras sucursales',
     footer_desc: 'Constructora mexicana con 21 años entregando infraestructura para hospitalidad, retail, industria y obra pública.',
     footer_empresa: 'Empresa',
     footer_capacidades: 'Capacidades',
