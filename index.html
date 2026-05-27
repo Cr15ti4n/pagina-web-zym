@@ -54,7 +54,7 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
 
-.t-eyebrow{font-size:21px;font-weight:600;letter-spacing:.011em;line-height:1.19;color:var(--navy)}
+.t-eyebrow{font-size:26px;font-weight:600;letter-spacing:.011em;line-height:1.19;color:var(--navy)}
 .t-sub{font-size:clamp(19px,1.6vw,24px);font-weight:500;line-height:1.35;color:var(--ink);letter-spacing:.009em;text-wrap:balance}
 .t-body{font-size:17px;line-height:1.5;color:var(--ink-2);letter-spacing:-.022em}
 
@@ -105,8 +105,8 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
 .hero-logo{margin:10px auto 0;max-width:min(520px,55vh);aspect-ratio:1.2/1;display:flex;align-items:center;justify-content:center;flex:1}
 .hero-logo svg{width:100%;height:auto}
-.hero-content{position:relative;max-width:900px;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:50px}
-.hero .brand-logo{position:absolute;top:22px;left:calc(50% - 600px);width:200px;height:200px}
+.hero-content{position:relative;max-width:900px;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:15px}
+.hero .brand-logo{position:absolute;top:8px;left:calc(50% - 600px);width:200px;height:200px}
 .hero .brand-logo svg{width:100%;height:100%}
 .hero-content .hero-text{text-align:center;width:100%}
 @media(max-width:1244px){.hero .brand-logo{left:22px}}
@@ -124,11 +124,11 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 @keyframes breathe{0%,100%{opacity:.45}50%{opacity:1}}
 
 /* BENTO */
-.bento-section{padding:0 clamp(6px,1.5vw,11px) clamp(6px,1.5vw,11px);background:var(--bg)}
+.bento-section{padding:0 22px 11px;background:var(--bg)}
 .bento-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;max-width:var(--max);margin:0 auto}
 .tile{background:var(--bg-2);border-radius:22px;padding:50px 40px;text-align:center;position:relative;overflow:hidden;min-height:520px;display:flex;flex-direction:column}
 .tile:has(.nosotros-gallery){min-height:auto;padding:clamp(12px,2vw,24px) clamp(12px,2vw,24px);height:fit-content}
-#nosotros .bento-grid{max-width:76%}
+#nosotros .bento-grid{max-width:1200px}
 .tile.span2{grid-column:span 2}
 .tile-eyebrow{font-size:clamp(11px,1vw,13px);font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.08em}
 .tile h2{font-size:clamp(20px,3vw,38px);font-weight:700;letter-spacing:-.018em;line-height:1.08;margin-top:6px;text-wrap:balance;color:var(--ink)}
@@ -649,6 +649,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--line);padding:40px 22px
     <!-- Fila 6: Normal-izq + wide-der -->
     <article class="proj reveal" data-cat="retail" onclick="openGallery('radioshack')" style="cursor:pointer"><img loading="lazy" src="img/radioshack/web/img-0405.webp" alt="Radioshack" width="1920" height="1280"><span class="proj-badge">10 proyectos entregados</span><div class="proj-info"><span class="tag">Retail · Miyana, Ciudad de México</span><h3>Radioshack</h3><span></span></div></article>
     <article class="proj proj-wide reveal" data-cat="industrial" onclick="openGallery('ford')" style="cursor:pointer"><img loading="lazy" src="img/ford/web/imagen-9.webp" alt="Ford Hermosillo" width="1241" height="818"><span class="proj-badge">1 proyecto entregado</span><div class="proj-info"><span class="tag">Industrial · Hermosillo</span><h3>Ford — Centro de Logística</h3><span>2024 · 32,000 m²</span></div></article>
+    <article class="proj reveal" data-cat="industrial" onclick="openGallery('prologis')" style="cursor:pointer"><img loading="lazy" src="img/prologis/web/imagen-71.webp" alt="Prologis" width="1600" height="1200"><span class="proj-badge">1 proyecto entregado</span><div class="proj-info"><span class="tag">Industrial</span><h3>Prologis</h3><span></span></div></article>
     <!-- Fila 7: Wide-izq + normal-der -->
     <article class="proj proj-wide reveal" data-cat="publica" onclick="openGallery('cfewtc')" style="cursor:pointer"><img loading="lazy" src="img/cfe-wtc/web/dsc02398.webp" alt="CFE" style="filter:brightness(.65)" width="1600" height="1065"><span class="proj-badge">8 proyectos entregados</span><div class="proj-info"><span class="tag">Pública · Ciudad de México</span><h3>CFE</h3><span></span></div></article>
     <article class="proj reveal" data-cat="publica" onclick="openGallery('cinvestav')" style="cursor:pointer"><img loading="lazy" src="img/cinvestav/web/imagen-3.webp" alt="CINVESTAV" width="1337" height="1087"><span class="proj-badge">10 proyectos entregados</span><div class="proj-info"><span class="tag">Pública · Ciudad de México</span><h3>CINVESTAV</h3><span></span></div></article>
@@ -724,6 +725,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--line);padding:40px 22px
       <div class="client"><img loading="lazy" src="img/bmw-group/logo/logo-1.webp" alt="BMW Group" style="max-width:65%;max-height:65%;object-fit:contain"></div>
       <div class="client"><img loading="lazy" src="img/dtna-toluca/logo/logo-2.webp" alt="DTNA Toluca" style="max-width:70%;max-height:60%;object-fit:contain"></div>
       <div class="client"><img loading="lazy" src="img/griffin/logo/logo-1.webp" alt="Griffin" style="max-width:75%;max-height:65%;object-fit:contain"></div>
+      <div class="client"><img loading="lazy" src="img/prologis/logo/logo-1.webp" alt="Prologis" style="max-width:75%;max-height:60%;object-fit:contain"></div>
     </div>
   </div>
 
@@ -1338,6 +1340,53 @@ const galleries = {
       'img/radioshack/thumbs/img-1438.webp',
       'img/radioshack/thumbs/imagen-1.webp',
       'img/radioshack/thumbs/imagen-2.webp'
+    ]
+  },
+  prologis: {
+    title: 'Prologis',
+    images: [
+      'img/prologis/web/imagen-13.webp',
+      'img/prologis/web/imagen-14.webp',
+      'img/prologis/web/imagen-16.webp',
+      'img/prologis/web/imagen-19.webp',
+      'img/prologis/web/imagen-22.webp',
+      'img/prologis/web/imagen-42.webp',
+      'img/prologis/web/imagen-47.webp',
+      'img/prologis/web/imagen-51.webp',
+      'img/prologis/web/imagen-56.webp',
+      'img/prologis/web/imagen-58.webp',
+      'img/prologis/web/imagen-59.webp',
+      'img/prologis/web/imagen-60.webp',
+      'img/prologis/web/imagen-62.webp',
+      'img/prologis/web/imagen-66.webp',
+      'img/prologis/web/imagen-69.webp',
+      'img/prologis/web/imagen-70.webp',
+      'img/prologis/web/imagen-71.webp',
+      'img/prologis/web/imagen-83.webp',
+      'img/prologis/web/imagen-92.webp',
+      'img/prologis/web/imagen-103.webp'
+    ],
+    thumbs: [
+      'img/prologis/thumbs/imagen-13.webp',
+      'img/prologis/thumbs/imagen-14.webp',
+      'img/prologis/thumbs/imagen-16.webp',
+      'img/prologis/thumbs/imagen-19.webp',
+      'img/prologis/thumbs/imagen-22.webp',
+      'img/prologis/thumbs/imagen-42.webp',
+      'img/prologis/thumbs/imagen-47.webp',
+      'img/prologis/thumbs/imagen-51.webp',
+      'img/prologis/thumbs/imagen-56.webp',
+      'img/prologis/thumbs/imagen-58.webp',
+      'img/prologis/thumbs/imagen-59.webp',
+      'img/prologis/thumbs/imagen-60.webp',
+      'img/prologis/thumbs/imagen-62.webp',
+      'img/prologis/thumbs/imagen-66.webp',
+      'img/prologis/thumbs/imagen-69.webp',
+      'img/prologis/thumbs/imagen-70.webp',
+      'img/prologis/thumbs/imagen-71.webp',
+      'img/prologis/thumbs/imagen-83.webp',
+      'img/prologis/thumbs/imagen-92.webp',
+      'img/prologis/thumbs/imagen-103.webp'
     ]
   },
   ford: {
