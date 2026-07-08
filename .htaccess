@@ -1,0 +1,14 @@
+# Servir correctamente imagenes modernas (corrige el signo de interrogacion en .webp)
+AddType image/webp .webp
+AddType image/avif .avif
+AddType image/svg+xml .svg
+
+# Cache de imagenes (mejora velocidad de carga)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/avif "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
