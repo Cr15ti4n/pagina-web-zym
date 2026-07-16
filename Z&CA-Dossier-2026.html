@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Z&amp;CA — Dossier 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@200;300;400;500;600&family=Playfair+Display:wght@400;500&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── THEME ── */
+:root {
+  --bg: #ffffff;
+  --bg-gray: #F0F0F0;
+  --gray-logo: #B0B0B0;
+  --bg2: #1A4F8C;
+  --accent: #3B82C4;
+  --accent-low: rgba(59,130,196,.10);
+  --accent-mid: rgba(59,130,196,.30);
+  --text: #1a1a1a;
+  --text2: #A8C4E8;
+  --text3: #3A3A3A;
+  --text4: #1A3A6B;
+  --fh: 'Archivo Black', sans-serif;
+  --fb: 'Barlow', sans-serif;
+  --sp: clamp(2rem, 6vw, 5.5rem);
+  --gap: clamp(1rem, 2.5vw, 2.4rem);
+}
+
+/* ── BASE ── */
+html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+body { background: var(--bg); font-family: var(--fb); color: var(--text); }
+img { max-width: 100%; display: block; }
+
+/* ── SECTIONS ── */
+.slide {
+  height: 100vh; height: 100dvh;
+  position: relative; overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 1px;
+  background: var(--accent); z-index: 1000; width: 0%;
+  transition: width .3s ease;
+}
+
+/* ── NAV DOTS ── */
+.nav-dots {
+  position: fixed; right: clamp(.6rem, 1.5vw, 1.2rem); top: 50%;
+  transform: translateY(-50%); display: flex; flex-direction: column;
+  gap: 6px; z-index: 1000;
+}
+.nav-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(0,0,0,.12); border: none; padding: 0;
+  cursor: pointer; transition: all .3s ease;
+}
+.nav-dot.active { background: var(--accent); height: 14px; border-radius: 2px; }
+
+/* ── PAGE NUM ── */
+.page-num {
+  position: fixed; bottom: clamp(.6rem, 1.5vh, 1rem); right: clamp(.8rem, 2vw, 1.5rem);
+  font-family: var(--fb); font-size: clamp(.5rem, .8vw, .65rem);
+  color: var(--text4); letter-spacing: .1em; z-index: 100; pointer-events: none;
+}
+
+/* ── ONDA INFERIOR ── */
+@keyframes wdLeft  { 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(18px) } }
+@keyframes wdRight { 0%,100%{ transform: translateX(0) } 50%{ transform: translateX(-18px) } }
+.wave-wrap {
+  position: absolute; bottom: 0; left: -3%; width: 106%; height: 80px;
+  pointer-events: none; z-index: 10; overflow: hidden;
+}
+.wave-wrap svg { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; }
+.wave-wrap .wl1 { animation: wdLeft 4s ease-in-out infinite; }
+.wave-wrap .wl2 { animation: wdRight 4s ease-in-out .6s infinite; }
+.wave-wrap .wl3 { animation: wdLeft 5s ease-in-out 1.2s infinite; }
+/* En slides generales, onda vía ::after desactivada — se usa wave-wrap */
+.slide::after { display: none; }
+/* En slides de proyecto, wave-wrap solo en panel info */
+.ps-wave {
+  position: absolute; bottom: 0; left: -3%; width: 106%; height: 80px;
+  pointer-events: none; z-index: 10; overflow: hidden;
+}
+.ps-wave svg { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; }
+.ps-wave .wl1 { animation: wdLeft 4s ease-in-out infinite; }
+.ps-wave .wl2 { animation: wdRight 4s ease-in-out .6s infinite; }
+.ps-wave .wl3 { animation: wdLeft 5s ease-in-out 1.2s infinite; }
+
+/* ── REVEAL (fade up) ── */
+.rv { opacity: 0; transform: translateY(50px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.slide.visible .rv { opacity: 1; transform: translateY(0); }
+.slide:not(.visible) .rv { opacity: 0; transform: translateY(50px); }
+
+.pp { opacity: 0; transform: translateY(60px); transition: opacity .9s cubic-bezier(.16,1,.3,1) .15s, transform .9s cubic-bezier(.16,1,.3,1) .15s; }
+.slide.visible .pp { opacity: 1; transform: translateY(0); }
+.slide:not(.visible) .pp { opacity: 0; transform: translateY(60px); }
+
+/* ── SHARED ── */
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fb); font-size: clamp(.9rem, 1.5vw, 1.15rem);
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+}
+.tag::before { content: ''; width: 16px; height: 1px; background: var(--gray-logo); }
+
+.pill {
+  background: var(--accent); color: #fff; font-family: var(--fh);
+  font-size: clamp(.6rem, .9vw, .75rem); padding: .3em .9em;
+  display: inline-block; border-radius: 2px;
+}
+
+/* ════════════════════════════════════════
+   S1 — PORTADA
+   ════════════════════════════════════════ */
+#s1 { display: grid; grid-template-columns: 1fr 1fr; }
+#s1 .left {
+  padding: var(--sp); display: flex; flex-direction: column;
+  justify-content: space-between;
+}
+#s1 .left .logo-wrap { display: flex; justify-content: center; }
+#s1 .left .logo { width: clamp(240px, 30vw, 420px); align-self: center; }
+#s1 .left .tagline {
+  font-size: clamp(.78rem, 1.3vw, 1rem); font-weight: 300;
+  color: var(--text3); letter-spacing: .04em; line-height: 1.9;
+}
+#s1 .left .bottom { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+#s1 .left .bottom span { font-size: clamp(.78rem, 1.3vw, 1rem); color: var(--text3); font-weight: 300; }
+
+#s1 .right {
+  background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px); padding: var(--sp); position: relative;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.srv-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(.5rem, 1.2vw, .8rem); flex: 1; align-content: center;
+}
+.srv-card { border-bottom: 1px solid rgba(26,79,140,.12); padding: clamp(.8rem, 2vw, 1.4rem); }
+.srv-num { font-family: var(--fh); font-size: clamp(1.2rem, 2.5vw, 2rem); color: #3A3A3A; line-height: 1; }
+.srv-name { font-family: var(--fb); font-size: clamp(.6rem, .9vw, .75rem); color: var(--text4); font-weight: 400; margin-top: .3em; line-height: 1.4; }
+.quote-text { font-family: var(--fb); font-weight: 300; font-size: clamp(.6rem, .9vw, .75rem); color: var(--text4); line-height: 1.7; }
+
+/* ════════════════════════════════════════
+   S2 — CONTENIDO
+   ════════════════════════════════════════ */
+#s2 { display: grid; grid-template-columns: auto 1fr; background: var(--bg); }
+.s2-spine {
+  width: clamp(48px, 8vw, 80px); background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px);
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-family: var(--fh); font-size: clamp(.6rem, 1vw, .8rem); font-weight: 300;
+  color: var(--bg2); letter-spacing: .14em; text-transform: uppercase;
+}
+.s2-content { padding: var(--sp); display: flex; flex-direction: column; justify-content: center; gap: var(--gap); }
+.contents-list { list-style: none; display: flex; flex-direction: column; gap: clamp(.8rem, 2vh, 1.4rem); }
+.c-item {
+  display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.5rem);
+  padding-bottom: clamp(.5rem, 1.5vh, .8rem);
+  cursor: pointer; transition: opacity .2s;
+}
+.c-item:hover { opacity: .65; }
+.c-num { font-family: var(--fh); font-size: clamp(1.6rem, 3.5vw, 3rem); color: var(--bg2); line-height: 1; min-width: clamp(40px, 5vw, 65px); }
+.c-title { font-family: var(--fh); font-size: clamp(1.1rem, 3vw, 2.2rem); color: var(--text); line-height: 1; }
+.c-meta { font-family: var(--fb); font-size: clamp(.7rem, 1.1vw, .9rem); color: var(--text3); margin-left: auto; white-space: nowrap; font-weight: 300; }
+
+/* ════════════════════════════════════════
+   S3 — QUIÉNES SOMOS
+   ════════════════════════════════════════ */
+#s3 { display: grid; grid-template-columns: 1fr 1fr; }
+#s3 .left {
+  padding: var(--sp); display: flex; flex-direction: column;
+  justify-content: center; gap: var(--gap);
+}
+.co-desc { font-size: clamp(.95rem, 1.6vw, 1.2rem); font-weight: 300; color: var(--text3); line-height: 1.9; }
+.co-origin { font-size: clamp(.95rem, 1.6vw, 1.2rem); font-weight: 300; color: var(--text3); line-height: 1.9; }
+
+#s3 .right {
+  background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px); padding: var(--sp); position: relative;
+  display: flex; flex-direction: column; gap: var(--gap); justify-content: center;
+}
+.mis-block { border-left: 1px solid rgba(26,79,140,.25); padding-left: clamp(1rem, 2.5vw, 1.8rem); }
+.mis-lbl { font-family: var(--fh); font-size: clamp(.8rem, 1.2vw, 1rem); color: var(--accent); letter-spacing: .14em; text-transform: uppercase; margin-bottom: .5em; }
+.mis-txt { font-size: clamp(.95rem, 1.6vw, 1.2rem); font-weight: 300; color: var(--text3); line-height: 1.9; }
+
+/* ════════════════════════════════════════
+   S4 — VALORES
+   ════════════════════════════════════════ */
+#s4 { display: grid; grid-template-columns: auto 1fr; background: var(--bg); }
+.s4-spine {
+  width: clamp(48px, 8vw, 80px); background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px);
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-family: var(--fh); font-size: clamp(.6rem, 1vw, .8rem); font-weight: 300;
+  color: var(--bg2); letter-spacing: .14em; text-transform: uppercase;
+}
+.s4-content { padding: var(--sp); display: flex; flex-direction: column; gap: var(--gap); justify-content: center; }
+.val-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(.6rem, 1.4vw, 1.2rem); }
+.val-card {
+  background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px); border-radius: 4px;
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+  display: flex; flex-direction: column; justify-content: space-between; gap: .8em;
+  transition: opacity .2s;
+}
+.val-card:hover { opacity: .88; }
+.val-icon { width: clamp(28px, 3.5vw, 42px); height: clamp(28px, 3.5vw, 42px); opacity: .65; }
+.val-name { font-family: var(--fh); font-size: clamp(.85rem, 1.5vw, 1.2rem); color: var(--bg2); text-transform: uppercase; letter-spacing: .1em; }
+.val-desc { font-size: clamp(.78rem, 1.2vw, 1rem); font-weight: 300; color: var(--text3); line-height: 1.7; }
+
+/* ════════════════════════════════════════
+   S5 — SERVICIOS
+   ════════════════════════════════════════ */
+#s5 { display: grid; grid-template-columns: auto 1fr; }
+.s5-spine {
+  width: clamp(48px, 8vw, 80px); background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px);
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-family: var(--fh); font-size: clamp(.6rem, 1vw, .8rem); font-weight: 300;
+  color: var(--bg2); letter-spacing: .14em; text-transform: uppercase;
+}
+.s5-content { padding: var(--sp); display: flex; flex-direction: column; gap: var(--gap); justify-content: center; }
+.svc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(1rem, 2.5vw, 2rem); margin-top: 3cm; }
+.svc-col { border-left: 1px solid var(--gray-logo); padding: clamp(1.2rem, 2.5vw, 2rem); transition: border-color .2s; }
+.svc-col:hover { border-left-color: var(--accent); }
+.svc-title { font-family: var(--fh); font-size: clamp(1.2rem, 2.6vw, 1.9rem); color: var(--text); }
+.svc-bar { width: 20px; height: 1px; background: var(--gray-logo); margin: .5em 0 .8em; }
+.svc-list { list-style: none; display: flex; flex-direction: column; gap: clamp(.4rem, 1vh, .7rem); }
+.svc-list li { font-size: clamp(.85rem, 1.3vw, 1.05rem); font-weight: 300; color: var(--text3); line-height: 1.7; display: flex; gap: .6em; }
+.svc-list li::before { content: ''; width: 8px; height: 1px; background: var(--gray-logo); flex-shrink: 0; margin-top: .65em; }
+
+/* ════════════════════════════════════════
+   S6 — MARCAS
+   ════════════════════════════════════════ */
+#s6 { display: grid; grid-template-columns: auto 1fr; }
+.s6-spine {
+  width: clamp(48px, 8vw, 80px); background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px);
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-family: var(--fh); font-size: clamp(.6rem, 1vw, .8rem); font-weight: 300;
+  color: var(--bg2); letter-spacing: .14em; text-transform: uppercase;
+}
+.s6-content { padding: var(--sp); display: flex; flex-direction: column; gap: var(--gap); justify-content: center; max-height: 100vh; overflow: hidden; }
+.logos-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(.6rem, 1.5vw, 1.2rem); align-content: center; }
+.logo-cell { display: flex; align-items: center; justify-content: center; padding: clamp(.4rem, 1vw, .8rem); min-height: clamp(40px, 7vh, 65px); transition: opacity .2s; }
+.logo-cell:hover { opacity: .65; }
+.logo-cell img { width: 80%; height: 80%; object-fit: contain; mix-blend-mode: multiply; }
+
+/* ════════════════════════════════════════
+   S7 — CLIENTES
+   ════════════════════════════════════════ */
+.s7-spine {
+  width: clamp(48px, 8vw, 80px); background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px);
+  display: flex; flex-direction: column;
+}
+.s7-cat {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-family: var(--fh); font-size: clamp(.65rem, 1vw, .85rem); font-weight: 300;
+  color: var(--bg2); letter-spacing: .14em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(26,79,140,.1);
+  cursor: pointer; transition: color .3s, background .3s;
+}
+.s7-cat:last-child { border-bottom: none; }
+.s7-cat.on { color: var(--accent); background: rgba(59,130,196,.08); }
+.s7-content { padding: var(--sp); display: flex; flex-direction: column; gap: var(--gap); justify-content: center; }
+.clients-section { position: relative; flex: 1; }
+.client-col { display: flex; flex-direction: column; gap: clamp(.8rem, 1.5vw, 1.2rem); justify-content: center;
+  opacity: 0; transform: translateY(15px); transition: opacity .4s ease, transform .4s ease;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+}
+.client-col.active { opacity: 1; transform: none; pointer-events: auto; }
+.client-col-title { display: none; }
+.client-logos { display: flex; flex-wrap: wrap; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: center; justify-content: center; }
+.cl-logo { display: flex; align-items: center; justify-content: center; padding: 1.5rem 2rem; min-height: 110px; transition: opacity .2s; width: calc(25% - 2.5rem); min-width: 180px; }
+.cl-logo:hover { opacity: .85; }
+.cl-logo img { max-width: 260px; max-height: 130px; width: 100%; object-fit: contain; }
+/* Hotelería: 4 por fila, más grandes */
+[data-col="hot"] .cl-logo { width: calc(25% - 2.5rem); min-width: 200px; padding: 2rem 2.5rem; min-height: 120px; }
+[data-col="hot"] .cl-logo img { max-width: 280px; max-height: 140px; }
+[data-col="obr"] .cl-logo { width: calc(25% - 2.5rem); min-width: 220px; padding: 2.5rem 3rem; min-height: 140px; }
+[data-col="obr"] .cl-logo img { max-width: 320px; max-height: 160px; }
+
+/* ════════════════════════════════════════
+   S8 — COBERTURA
+   ════════════════════════════════════════ */
+#s8 { display: grid; grid-template-columns: .5fr 2.4fr; }
+.s8-left {
+  background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px); padding: var(--sp); position: relative;
+  display: flex; flex-direction: column; justify-content: center; gap: var(--gap);
+}
+.cov-num { font-family: var(--fh); font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--accent); line-height: 1; }
+.cov-lbl { font-size: clamp(.75rem, 1.4vw, 1rem); font-weight: 300; color: var(--text4); }
+.cov-tag { font-size: clamp(.6rem, .9vw, .75rem); font-weight: 300; color: var(--text3); letter-spacing: .15em; text-transform: uppercase; }
+.s8-right { padding: var(--sp); padding-top: calc(var(--sp) - 1cm); display: flex; flex-direction: column; gap: clamp(.8rem,1.5vw,1.2rem); justify-content: flex-start; }
+.s8-map { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; }
+.s8-map svg { width:100%; height:auto; max-height:55vh; }
+.s8-map svg path { transition: fill .3s, fill-opacity .3s, stroke .3s, stroke-width .3s; }
+.s8-map svg path.active { fill:#3B82C4!important; fill-opacity:0.5!important; stroke:#1A4F8C!important; stroke-width:1.5!important; }
+.states-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(.5rem, 1.2vw, .9rem); align-content: center; }
+.state-item { font-size: clamp(.8rem, 1.3vw, 1.05rem); font-weight: 300; color: var(--text3); transition: color .2s, background .2s; cursor:pointer; padding:.2rem .4rem; border-radius:4px; }
+.state-item:hover, .state-item.on { color: var(--accent); background:rgba(59,130,196,.1); }
+
+/* ════════════════════════════════════════
+   S9 — PROYECTOS HEADER
+   ════════════════════════════════════════ */
+#s9 { display: flex; align-items: center; justify-content: center; text-align: center; background: var(--bg); }
+.s9-center { display: flex; flex-direction: column; align-items: center; gap: clamp(.5rem, 1.2vw, 1rem); }
+.proj-h { font-family: var(--fh); font-size: clamp(2rem, 7vw, 5.5rem); color: var(--text); letter-spacing: .02em; line-height: 1; }
+
+/* ════════════════════════════════════════
+   PROJECT SLIDES
+   ════════════════════════════════════════ */
+.ps { display: grid; grid-template-columns: auto 1fr 2fr; }
+.ps-spine {
+  width: clamp(38px, 6vw, 60px); background: #E8F0FA repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(26,79,140,.06) 40px, rgba(26,79,140,.06) 41px);
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-family: var(--fh); font-size: clamp(.7rem, 1.1vw, .9rem); font-weight: 300;
+  color: var(--bg2); letter-spacing: .14em; text-transform: uppercase;
+}
+.pi {
+  padding: var(--sp); display: flex; flex-direction: column;
+  justify-content: space-between; position: relative; overflow: hidden;
+}
+.pn { font-family: var(--fh); font-size: clamp(1.7rem, 4.5vw, 3.2rem); color: var(--text); line-height: 1.05; }
+.pn-solo { font-size: clamp(2.1rem, 5.5vw, 4rem); }
+.pl { font-size: clamp(1.3rem, 2.5vw, 1.75rem); color: var(--accent); margin-top: .3em; font-weight: 400; }
+.pd { font-size: clamp(.9rem, 1.4vw, 1.1rem); font-weight: 300; color: var(--text3); line-height: 1.85; }
+.ps-scope { display: flex; flex-direction: column; gap: .45em; }
+.scope-tag { font-size: clamp(.8rem, 1.15vw, .95rem); font-weight: 300; color: var(--text3); display: flex; align-items: center; gap: .5em; }
+.scope-tag::before { content: ''; width: 10px; height: 1px; background: var(--gray-logo); }
+
+.pp { position: relative; overflow: hidden; }
+.m1 { width: 100%; height: 100%; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; }
+.m1 .ph { grid-row: 1 / 3; }
+.m2 { width: 100%; height: 100%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; }
+.m3 { width: 100%; height: 100%; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; }
+.m3 .ph { grid-row: 1 / 3; }
+.pf { overflow: hidden; }
+.pf img { width: 100%; height: 100%; max-height: none; object-fit: cover; }
+
+/* ════════════════════════════════════════
+   S17 — CIERRE
+   ════════════════════════════════════════ */
+#s17 { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: var(--gap); text-align: center; background: var(--bg); }
+.close-iza { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: clamp(4.5rem, 12vw, 10rem); letter-spacing: 4px; color: var(--bg2); line-height: .75; }
+.close-iza span { font-weight: 400; font-size: clamp(1.6rem, 4.5vw, 2.8rem); letter-spacing: 6px; color: var(--accent); }
+.close-sub { font-size: clamp(.95rem, 1.8vw, 1.3rem); font-weight: 300; color: var(--text3); line-height: 1.85; max-width: 48ch; }
+.close-co { font-size: clamp(.78rem, 1.2vw, 1rem); color: var(--text4); letter-spacing: .2em; text-transform: uppercase; }
+.zm-logo-wrap { width: clamp(140px, 20vw, 260px); position: relative; }
+.qr-logo-overlay {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 32%; height: 32%; pointer-events: none;
+}
+.qr-logo-overlay .ring-rotate { transform-origin: 50px 50px; animation: ring-spin 30s linear infinite; }
+.qr-logo-overlay .orbit { transform-origin: 50px 50px; animation: spin 12s linear infinite; }
+.qr-logo-overlay .ring-glow { animation: glow 4s ease-in-out infinite; }
+/* ── Crossfade 2 imágenes (8s) ── */
+@keyframes crossfade { 0%,42% { opacity:1; } 50%,92% { opacity:0; } 100% { opacity:1; } }
+.pf-duo { position: relative; }
+.pf-duo img:nth-child(1) { position: relative; z-index: 2; animation: crossfade 8s ease-in-out infinite; }
+.pf-duo img:nth-child(2) { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Crossfade 3 imágenes (12s) ── */
+@keyframes cf3a { 0%,25%{opacity:1} 33%,92%{opacity:0} 100%{opacity:1} }
+@keyframes cf3b { 0%,25%{opacity:0} 33%,58%{opacity:1} 66%,100%{opacity:0} }
+@keyframes cf3c { 0%,58%{opacity:0} 66%,92%{opacity:1} 100%{opacity:0} }
+.pf-trio { position: relative; }
+.pf-trio img:nth-child(1) { position: relative; z-index: 3; animation: cf3a 9s ease-in-out infinite; }
+.pf-trio img:nth-child(2) { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; object-fit: cover; animation: cf3b 9s ease-in-out infinite; }
+.pf-trio img:nth-child(3) { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; animation: cf3c 9s ease-in-out infinite; }
+
+/* ── Crossfade 4 imágenes (16s) ── */
+@keyframes cf4a { 0%,21% { opacity:1; } 25%,96% { opacity:0; } 100% { opacity:1; } }
+@keyframes cf4b { 0%,21% { opacity:0; } 25%,46% { opacity:1; } 50%,100% { opacity:0; } }
+@keyframes cf4c { 0%,46% { opacity:0; } 50%,71% { opacity:1; } 75%,100% { opacity:0; } }
+@keyframes cf4d { 0%,71% { opacity:0; } 75%,96% { opacity:1; } 100% { opacity:0; } }
+.pf-quad { position: relative; }
+.pf-quad img:nth-child(1) { position: relative; z-index: 4; animation: cf4a 16s ease-in-out infinite; }
+.pf-quad img:nth-child(2) { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; object-fit: cover; animation: cf4b 16s ease-in-out infinite; }
+.pf-quad img:nth-child(3) { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; object-fit: cover; animation: cf4c 16s ease-in-out infinite; }
+.pf-quad img:nth-child(4) { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; animation: cf4d 16s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+@keyframes glow { 0%,100% { stroke-width: 1.8; opacity: .85; } 50% { stroke-width: 2.5; opacity: 1; } }
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .2s !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="pb"></div>
+<nav class="nav-dots" id="nd"></nav>
+<div class="page-num" id="pn">1 / 17</div>
+
+<!-- ═══════ S1 · PORTADA ═══════ -->
+<section class="slide" id="s1">
+  <div class="left">
+    <span class="tag rv">Grupo Z&amp;M · Dossier 2026</span>
+    <div class="logo-wrap">
+      <img class="logo rv" style="transition-delay:.1s" src="assets1/logos/z%26ca/z%26ca.png" alt="Z&amp;CA">
+    </div>
+    <p class="tagline rv" style="transition-delay:.2s;text-align:center;margin-top:-3rem">Construcción &amp; Acabados · Instalaciones Especiales · Automatización · Control<br>Domótica · Redes y CCTV · Energías Renovables</p>
+  </div>
+  <div class="right">
+    <span class="tag rv">Nuestros servicios</span>
+    <div class="srv-grid">
+      <div class="srv-card rv" style="transition-delay:.1s"><div class="srv-num">01</div><div class="srv-name">Instalaciones<br>Eléctricas</div></div>
+      <div class="srv-card rv" style="transition-delay:.18s"><div class="srv-num">02</div><div class="srv-name">Domótica &amp;<br>Automatización</div></div>
+      <div class="srv-card rv" style="transition-delay:.26s"><div class="srv-num">03</div><div class="srv-name">CCTV &amp;<br>Seguridad</div></div>
+      <div class="srv-card rv" style="transition-delay:.34s"><div class="srv-num">04</div><div class="srv-name">Redes, Voz<br>y Datos</div></div>
+      <div class="srv-card rv" style="transition-delay:.42s"><div class="srv-num">05</div><div class="srv-name">Energías<br>Renovables</div></div>
+      <div class="srv-card rv" style="transition-delay:.5s"><div class="srv-num">06</div><div class="srv-name">Construcción<br>&amp; Acabados</div></div>
+    </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S2 · CONTENIDO ═══════ -->
+<section class="slide" id="s2">
+  <div class="s2-spine">Contenido</div>
+  <div class="s2-content">
+    <ul class="contents-list">
+      <li class="c-item rv" data-go="s3" style="transition-delay:.08s"><span class="c-num">01</span><span class="c-title">¿Quiénes Somos?</span><span class="c-meta">Misión · Visión · Valores</span></li>
+      <li class="c-item rv" data-go="s5" style="transition-delay:.16s"><span class="c-num">02</span><span class="c-title">Servicios</span><span class="c-meta">Construcción · Instalación · Acabados</span></li>
+      <li class="c-item rv" data-go="s6" style="transition-delay:.24s"><span class="c-num">03</span><span class="c-title">Tecnologías de Punta</span><span class="c-meta">Partners &amp; Tecnología</span></li>
+      <li class="c-item rv" data-go="s8" style="transition-delay:.32s"><span class="c-num">04</span><span class="c-title">Cobertura Geográfica</span><span class="c-meta">20 estados · Nacional</span></li>
+      <li class="c-item rv" data-go="s9" style="transition-delay:.4s"><span class="c-num">05</span><span class="c-title">Proyectos Concluidos</span><span class="c-meta">Portafolio 2020 - 2026</span></li>
+    </ul>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S3 · QUIÉNES SOMOS ═══════ -->
+<section class="slide" id="s3">
+  <div class="left">
+    <span class="tag rv">01 · ¿Quiénes Somos?</span>
+    <p class="co-desc rv" style="transition-delay:.12s">Establecida en la Ciudad de Querétaro con sede en la Ciudad de México, IZA Infraestructura es una empresa dedicada a la implementación de Nuevas Tecnologías Sustentables, Domótica, Instalación de luminarias, Instalaciones de Redes, Voz y Datos, Equipos de CCTV y Sistemas contra incendios.</p>
+    <p class="co-origin rv" style="transition-delay:.24s">IZA Infraestructura surgió a partir de una mezcla de ideas y conocimientos obtenidos durante nuestro desarrollo como empresarios, lo cual nos ha ayudado a crear e imaginar nuevos proyectos capaces de ayudar y cambiar la vida de nuestros clientes.</p>
+  </div>
+  <div class="right">
+    <div class="mis-block rv">
+      <div class="mis-lbl">Misión</div>
+      <p class="mis-txt">Ser una empresa líder en el desarrollo de proyectos para la industria de la construcción, nuestro principal compromiso es brindar seguridad, eficacia y servicios de calidad con la pasión de nuestra gente.</p>
+    </div>
+    <div class="mis-block rv" style="transition-delay:.18s; border-left-color: rgba(59,130,196,.35)">
+      <div class="mis-lbl">Visión</div>
+      <p class="mis-txt">Ser una empresa reconocida por la excelencia y calidad de nuestros servicios, el compromiso con nuestro país, nuestra gente y la comunidad, sin descuidar en ningún momento el medio ambiente, buscando siempre desarrollar prácticas organizacionales que contribuyan a la mejora continua.</p>
+    </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S4 · VALORES ═══════ -->
+<section class="slide" id="s4">
+  <div class="s4-spine">Nuestros Valores</div>
+  <div class="s4-content">
+    <div>
+      <h2 class="rv" style="font-family:var(--fh);font-size:clamp(1.1rem,3vw,2.2rem);color:var(--text);margin-top:.3em">Los principios que nos guían</h2>
+    </div>
+    <div class="val-grid">
+    <div class="val-card rv" style="transition-delay:.1s">
+      <svg class="val-icon" viewBox="0 0 44 44" fill="none"><path d="M22 4L6 10v12c0 9 7 17 16 19 9-2 16-10 16-19V10L22 4z" stroke="#3B82C4" stroke-width="2" stroke-linejoin="round"/><polyline points="15,22 20,27 29,17" stroke="#3B82C4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="val-name">Honestidad</div><div class="val-desc">Somos sinceros, transparentes y coherentes. Actuamos con la verdad en nuestro entorno.</div>
+    </div>
+    <div class="val-card rv" style="transition-delay:.18s">
+      <svg class="val-icon" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="13" r="5" stroke="#3B82C4" stroke-width="2"/><path d="M22 20c-6 0-10 3-10 7v2h20v-2c0-4-4-7-10-7z" stroke="#3B82C4" stroke-width="2" stroke-linejoin="round"/><path d="M14 34c0-2 2-3 4-3h8c2 0 4 1 4 3" stroke="#3B82C4" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="val-name">Respeto</div><div class="val-desc">Respetamos las ideas y el trabajo de los demás. La humildad y el respeto son primordiales.</div>
+    </div>
+    <div class="val-card rv" style="transition-delay:.26s">
+      <svg class="val-icon" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="14" stroke="#3B82C4" stroke-width="2"/><polyline points="22,14 22,22 28,22" stroke="#3B82C4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="22" r="2" fill="#3B82C4"/></svg>
+      <div class="val-name">Responsabilidad</div><div class="val-desc">Nuestro equipo trabaja con dedicación, seriedad y compromiso. Ese es el secreto de nuestro éxito.</div>
+    </div>
+    <div class="val-card rv" style="transition-delay:.34s">
+      <svg class="val-icon" viewBox="0 0 44 44" fill="none"><path d="M22 36S8 28 8 18a7 7 0 0 1 14-1 7 7 0 0 1 14 1c0 10-14 18-14 18z" stroke="#3B82C4" stroke-width="2" stroke-linejoin="round"/></svg>
+      <div class="val-name">Amistad</div><div class="val-desc">Trabajamos en un ambiente ejemplar y armonioso con colaboradores, clientes y proveedores.</div>
+    </div>
+    <div class="val-card rv" style="transition-delay:.42s">
+      <svg class="val-icon" viewBox="0 0 44 44" fill="none"><circle cx="14" cy="14" r="5" stroke="#3B82C4" stroke-width="2"/><circle cx="30" cy="14" r="5" stroke="#3B82C4" stroke-width="2"/><path d="M6 29c0-4 4-6 8-6s8 2 8 6" stroke="#3B82C4" stroke-width="2" stroke-linecap="round"/><path d="M22 29c0-4 4-6 8-6s8 2 8 6" stroke="#3B82C4" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="36" x2="34" y2="36" stroke="#3B82C4" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="val-name">Igualdad</div><div class="val-desc">Nos comunicamos sin barreras y nos esforzamos en entender y ser compatibles con los demás.</div>
+    </div>
+    <div class="val-card rv" style="transition-delay:.5s">
+      <svg class="val-icon" viewBox="0 0 44 44" fill="none"><circle cx="12" cy="14" r="4" stroke="#3B82C4" stroke-width="2"/><circle cx="32" cy="14" r="4" stroke="#3B82C4" stroke-width="2"/><circle cx="22" cy="12" r="4" stroke="#3B82C4" stroke-width="2"/><path d="M6 32c0-3 3-5 6-5h4M38 32c0-3-3-5-6-5h-4M16 32c0-3 3-5 6-5s6 2 6 5" stroke="#3B82C4" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="val-name">Trabajo en Equipo</div><div class="val-desc">Afrontamos retos de manera conjunta. Somos positivos, libres de crear y expresar lo que sentimos.</div>
+    </div>
+  </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S5 · SERVICIOS ═══════ -->
+<section class="slide" id="s5">
+  <div class="s5-spine">¿Qué hacemos en IZA?</div>
+  <div class="s5-content">
+  <h2 class="rv" style="font-family:var(--fh);font-size:clamp(1.4rem,3.5vw,2.6rem);color:var(--text);transition-delay:.1s;margin-bottom:-.5rem">Nuestros Servicios</h2>
+  <div class="svc-grid">
+    <div class="svc-col rv" style="transition-delay:.2s">
+      <div class="svc-title">Construcción</div><div class="svc-bar"></div>
+      <ul class="svc-list">
+        <li>Edificación, adecuación y remodelación</li>
+        <li>Hotelería, Retail y Oficinas comerciales</li>
+        <li>Demoliciones y excavaciones</li>
+        <li>Cimentaciones y albañilería</li>
+      </ul>
+    </div>
+    <div class="svc-col rv" style="transition-delay:.3s">
+      <div class="svc-title">Instalaciones</div><div class="svc-bar"></div>
+      <ul class="svc-list">
+        <li>Instalaciones eléctricas</li>
+        <li>Hidrosanitarias e hidráulicas</li>
+        <li>Voz y datos · CCTV</li>
+        <li>Aire acondicionado</li>
+        <li>Automatización domótica y control</li>
+        <li>Energías renovables</li>
+      </ul>
+    </div>
+    <div class="svc-col rv" style="transition-delay:.4s">
+      <div class="svc-title">Acabados</div><div class="svc-bar"></div>
+      <ul class="svc-list">
+        <li>Pisos cerámicos y de concreto</li>
+        <li>Tablaroca y yeso</li>
+        <li>Pintura y pastas</li>
+        <li>Cancelería y carpintería</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S6 · MARCAS ═══════ -->
+<section class="slide" id="s6">
+  <div class="s6-spine">Tecnologías de Punta</div>
+  <div class="s6-content">
+  <!-- tag removed -->
+  <h2 class="rv" style="font-family:var(--fh);font-size:clamp(1.1rem,3vw,2.2rem);color:var(--text);transition-delay:.1s">Tecnologías de Punta</h2>
+  <div class="logos-grid">
+    <div class="logo-cell rv" style="transition-delay:.04s"><img src="assets1/tecnologias/slide6_img1.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.08s"><img src="assets1/tecnologias/slide6_img2.jpg" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.12s"><img src="assets1/tecnologias/slide6_img3.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.16s"><img src="assets1/tecnologias/slide6_img4.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.2s"><img src="assets1/tecnologias/slide6_img5.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.24s"><img src="assets1/tecnologias/slide6_img6.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.28s"><img src="assets1/tecnologias/slide6_img7.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.32s"><img src="assets1/tecnologias/slide6_img8.jpg" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.36s"><img src="assets1/tecnologias/slide6_img9.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.4s"><img src="assets1/tecnologias/slide6_img10.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.44s"><img src="assets1/tecnologias/slide6_img11.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.48s"><img src="assets1/tecnologias/slide6_img12.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.52s"><img src="assets1/tecnologias/slide6_img13.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.56s"><img src="assets1/tecnologias/slide6_img14.png" alt="Marca" loading="lazy"></div>
+    <div class="logo-cell rv" style="transition-delay:.6s"><img src="assets1/tecnologias/slide6_img15.png" alt="Marca" loading="lazy"></div>
+  </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S7 · CLIENTES (Hotelería + Retail) ═══════ -->
+<section class="slide" id="s7" style="display:grid;grid-template-columns:auto 1fr">
+  <div class="s7-spine">
+    <div class="s7-cat on" data-cat="hot">Hotelería</div>
+    <div class="s7-cat" data-cat="ret">Retail</div>
+  </div>
+  <div class="s7-content" style="padding-top:clamp(2rem,6vh,5rem)">
+    <span class="tag rv" id="tag-hot">Quienes confían en IZA</span>
+    <h2 class="rv" style="font-family:var(--fh);font-size:clamp(1.1rem,3vw,2.2rem);color:var(--text);transition-delay:.1s">Nuestros Clientes</h2>
+    <div class="clients-section rv" style="transition-delay:.2s">
+      <div class="client-col active" data-col="hot" style="justify-content:center;padding-top:5vh">
+        <div class="client-col-title">Hotelería</div>
+        <div class="client-logos" style="margin-top:-1cm">
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/hotel_rosewood.webp" alt="Rosewood Hotel Group" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/hotel_banyantree.webp" alt="Banyan Tree Hotels &amp; Resorts" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/hotel_alila.webp" alt="Alila Mayakoba" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/hotel_fairmont.png" alt="Fairmont Hotels &amp; Resorts" loading="lazy"></div>
+        </div>
+        <div class="client-logos" style="margin-top:1cm">
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/slide7_img3.png" alt="Mayakoba" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/slide7_img2.png" alt="Mayakoba México" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/hoteleria/slide7_img1.png" alt="RLH Properties" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="client-col" data-col="ret" style="justify-content:center;padding-top:calc(10vh - 3cm)">
+        <div class="client-col-title">Retail</div>
+        <div class="client-logos">
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_liverpool.png" alt="Liverpool" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_officedepot.png" alt="Office Depot" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_smartfit.png" alt="Smart Fit" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_petco.png" alt="Petco" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_radioshack.png" alt="RadioShack" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_gruposalinas.png" alt="Grupo Salinas" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_palacio.webp" alt="El Palacio de Hierro" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_marchand.png" alt="Marchand Papelería" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/slide7_img17.png" alt="Coppel" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/slide7_img18.png" alt="Sabadell" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_planetfitness.webp" alt="Planet Fitness" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_scotiabank.webp" alt="Scotiabank" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_elektra.webp" alt="Elektra" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/retail/retail_habers.webp" alt="Industrias Haber's" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S7b · CLIENTES (Industria + Obra Pública) ═══════ -->
+<section class="slide" id="s7b" style="display:grid;grid-template-columns:auto 1fr">
+  <div class="s7-spine">
+    <div class="s7-cat on" data-cat="ind">Industria</div>
+    <div class="s7-cat" data-cat="obr">Obra Pública</div>
+  </div>
+  <div class="s7-content" style="padding-top:clamp(4rem,10vh,8rem)">
+    <h2 class="rv" style="font-family:var(--fh);font-size:clamp(1.1rem,3vw,2.2rem);color:var(--text);transition-delay:.1s">Nuestros Clientes</h2>
+    <div class="clients-section rv" style="transition-delay:.2s">
+      <div class="client-col active" data-col="ind" style="justify-content:center;padding-top:calc(12vh - 1cm)">
+        <div class="client-col-title">Industria</div>
+        <div class="client-logos">
+          <div class="cl-logo"><img src="assets1/logos/clientes/industrial/industrial_mercadolibre.webp" alt="Mercado Libre" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/industrial/industrial_ford.webp" alt="Ford" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/industrial/industrial_bmw.webp" alt="BMW Group" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/industrial/industrial_giffin.webp" alt="Giffin" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/industrial/industrial_daimler.png" alt="Daimler" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/industrial/industrial_prologis.webp" alt="Prologis" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="client-col" data-col="obr" style="justify-content:center;padding-top:calc(10vh - 4cm)">
+        <div class="client-col-title">Obra Pública</div>
+        <div class="client-logos">
+          <div class="cl-logo"><img src="assets1/logos/clientes/obra%20publica/obra_logo1.webp" alt="Cliente" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/obra%20publica/obra_logo2.webp" alt="Cliente" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/obra%20publica/obra_logo3.webp" alt="Cliente" loading="lazy"></div>
+          <div class="cl-logo"><img src="assets1/logos/clientes/obra%20publica/obra_logo4.webp" alt="Cliente" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S8 · COBERTURA ═══════ -->
+<section class="slide" id="s8">
+  <div class="s8-left">
+    <div class="cov-num rv">+20</div>
+    <div class="cov-lbl rv" style="transition-delay:.12s">Estados de<br>cobertura nacional</div>
+    <div class="cov-tag rv" style="transition-delay:.24s">04 · Cobertura Geográfica</div>
+  </div>
+  <div class="s8-right">
+    <span class="tag rv">Presencia en todo México</span>
+    <div class="s8-map rv" id="mexicoMapContainer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" style="width:100%;height:100%">
+<path id="zacatecas" data-name="Zacatecas" d="M497,255L495,256L493,258L493,260L490,261L489,263L486,265L484,266L483,269L484,271L483,273L481,275L477,277L475,278L474,281L472,283L469,284L467,285L465,286L465,288L461,288L459,288L457,289L457,292L459,295L458,297L457,299L457,301L460,304L462,304L464,306L466,307L468,307L469,309L469,311L471,311L473,311L475,311L477,309L480,306L482,305L484,308L483,313L481,316L482,319L482,321L481,324L480,326L479,328L477,328L475,327L472,325L469,324L467,323L465,323L464,320L464,318L460,317L457,314L455,314L452,316L450,317L448,318L446,320L446,322L444,325L442,326L442,328L441,330L443,333L444,335L444,337L447,339L447,341L446,343L443,344L441,346L439,347L436,347L435,350L432,350L430,350L428,351L426,351L423,350L421,349L420,347L418,347L417,345L421,344L423,342L421,341L419,341L418,338L420,338L422,337L422,334L422,332L424,330L427,328L429,327L431,326L433,325L434,322L435,319L432,318L433,316L430,315L428,316L428,318L428,320L426,321L425,323L423,323L421,323L419,323L420,320L421,318L423,316L423,314L421,311L419,311L417,311L415,311L415,314L415,317L415,319L413,320L412,318L412,315L413,312L415,309L417,307L415,306L413,306L411,307L409,308L410,311L411,313L410,315L408,316L409,313L407,313L405,314L405,316L403,316L401,317L401,315L401,313L401,311L403,309L406,307L407,305L407,303L407,301L406,298L407,295L408,293L409,290L410,288L410,286L412,283L414,282L415,280L415,278L414,276L414,273L415,271L413,269L416,268L419,265L421,262L424,261L424,259L426,258L428,258L430,258L433,259L435,258L437,259L439,259L441,259L443,259L446,259L449,259L449,257L449,254L449,252L448,250L448,248L448,246L446,246L446,244L445,242L445,240L447,240L449,239L451,239L455,239L458,239L460,239L464,241L466,242L469,244L471,247L473,246L474,249L476,250L478,250L480,249L483,249L486,250L487,252L488,254L492,256L494,254L496,255Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="yucatan" data-name="Yucatán" d="M858,338L858,344L857,346L857,348L857,350L858,352L857,355L856,357L855,360L852,362L849,364L848,366L845,367L842,367L840,367L838,368L838,370L838,372L837,370L835,370L834,372L833,374L831,374L828,375L826,376L824,378L822,378L821,380L819,380L817,380L814,381L812,383L809,383L808,386L807,388L806,386L806,384L803,382L802,380L801,378L799,377L797,376L795,372L792,370L792,368L791,366L789,368L787,367L785,365L781,364L781,357L780,355L781,352L785,349L787,348L790,347L793,345L795,345L799,344L803,343L807,342L811,342L813,342L815,342L818,341L821,341L824,340L826,339L828,339L829,337L831,337L833,336L836,336L838,336L842,334L844,335L846,336L848,336L850,336L851,338L853,338L856,338L858,338Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="veracruz" data-name="Veracruz" d="M590,338L589,340L590,338ZM579,317L579,319L580,321L580,323L581,325L582,327L581,329L582,331L582,333L583,335L584,337L585,339L587,338L587,341L589,343L589,345L590,347L591,349L592,351L594,355L595,357L595,359L596,361L600,365L602,367L605,370L607,372L608,374L612,378L613,380L615,382L616,384L617,386L617,388L618,390L618,392L619,394L620,396L622,399L624,400L625,402L626,404L629,404L629,407L630,409L632,410L634,411L632,411L632,413L634,412L637,413L640,413L643,414L647,414L650,414L652,415L654,417L656,418L658,418L660,418L661,421L663,423L664,425L666,428L669,429L671,429L673,428L676,428L681,427L679,427L679,429L680,431L680,433L680,436L681,438L683,438L684,440L686,440L689,442L691,445L691,447L691,449L692,451L689,454L687,455L678,456L666,455L661,455L655,454L654,452L654,450L651,449L649,447L647,444L647,442L649,442L647,440L644,442L642,442L638,444L635,445L632,445L631,442L630,440L629,438L631,435L632,433L632,430L631,428L629,428L627,427L625,427L623,428L623,426L621,426L620,424L618,424L616,423L614,421L614,419L614,417L612,416L612,418L611,421L609,420L606,418L604,419L602,420L600,418L600,416L598,416L595,415L594,413L594,410L595,408L596,406L596,402L596,400L602,400L602,398L599,396L597,395L594,395L592,394L593,392L591,389L593,385L594,383L594,381L596,377L598,375L598,373L596,373L593,372L591,371L589,373L587,375L585,373L583,373L582,370L581,367L583,365L585,365L586,363L583,361L582,359L580,358L582,357L582,355L580,356L578,355L577,357L576,359L575,362L573,361L571,363L569,364L567,366L564,368L562,369L560,366L560,364L561,362L561,358L565,355L567,356L568,354L569,352L570,350L568,347L566,345L563,346L560,344L560,342L560,340L559,337L557,337L557,335L556,333L558,332L560,331L559,329L559,326L561,325L561,322L563,321L564,319L563,317L558,315L555,315L556,313L561,313L563,314L565,314L566,312L568,312L570,314L572,315L574,315L575,317L577,319L579,317ZM584,329L585,331L588,333L590,335L592,336L591,339L590,341L589,343L589,340L590,338L590,336L588,335L587,333L585,332L584,330Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="tlaxcala" data-name="Tlaxcala" d="M558,393L556,393L555,391L557,390L559,390L561,389L564,389L566,388L566,386L569,387L571,387L574,385L577,387L579,390L580,392L582,391L583,393L585,395L585,397L583,397L581,397L579,399L577,400L575,399L572,402L569,401L566,400L565,398L563,395L561,394L559,393Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="tamaulipas" data-name="Tamaulipas" d="M581,262L581,267L581,265L581,263ZM589,236L588,239L586,243L586,241L587,239L588,237ZM579,317L578,319L575,317L574,315L572,315L570,314L568,312L566,312L565,314L563,314L561,313L557,313L555,314L553,314L551,314L549,313L545,314L543,314L541,314L539,311L538,309L537,307L534,306L533,304L531,305L529,305L527,305L525,305L523,304L520,304L519,302L518,299L518,297L519,295L517,293L517,291L516,288L518,288L520,288L520,286L520,284L520,282L522,280L522,278L524,277L528,277L531,276L531,274L534,275L533,273L531,272L530,269L529,267L528,265L528,263L529,260L528,257L526,257L526,255L528,253L530,253L532,251L534,250L536,248L538,247L540,248L540,246L542,245L542,243L541,241L543,240L544,238L546,240L549,240L549,238L551,236L554,236L556,235L559,233L561,231L562,229L560,228L558,225L558,223L558,221L558,219L558,217L558,215L554,215L552,215L550,216L548,216L547,214L544,213L542,212L541,210L539,209L538,207L535,204L534,201L532,200L530,198L528,198L528,196L528,194L528,192L525,192L525,189L527,188L528,186L527,184L526,181L526,179L524,178L526,177L523,176L521,176L521,174L523,173L525,172L526,170L528,170L530,171L532,172L532,174L533,177L532,179L533,181L535,183L535,185L534,187L536,189L537,191L539,192L540,194L541,196L541,198L542,200L544,202L543,204L545,204L547,205L549,205L551,206L553,207L555,209L558,209L560,209L562,211L564,211L565,213L567,214L569,214L571,214L573,214L577,214L579,214L581,215L583,215L584,217L586,217L586,219L588,219L590,220L591,218L593,217L595,217L597,217L597,219L596,222L596,224L594,228L591,233L590,235L588,236L590,233L589,231L587,231L585,231L587,232L586,234L584,234L582,233L581,235L581,237L582,239L581,241L580,243L582,244L581,246L581,248L581,250L581,252L581,254L580,257L580,255L577,256L578,259L580,258L580,260L580,262L580,264L580,266L579,268L580,271L580,274L581,276L580,278L581,276L581,279L580,286L580,290L580,295L580,297L580,300L579,302L578,305L576,307L577,309L577,311L578,314L579,316Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="tabasco" data-name="Tabasco" d="M724,415L725,419L727,421L729,422L731,423L731,425L733,428L734,430L736,431L738,433L740,434L742,435L744,436L746,435L748,435L748,433L748,431L751,431L753,431L755,432L757,433L759,435L761,435L764,436L764,438L764,443L764,449L764,453L753,453L753,450L751,450L749,448L747,448L747,446L747,443L746,441L744,441L743,439L743,437L741,437L739,437L737,436L736,438L734,438L732,437L732,439L731,441L729,441L727,443L725,444L723,446L721,447L718,449L716,450L714,449L714,447L712,446L710,446L711,444L709,443L708,441L710,438L710,436L708,437L706,436L704,434L702,434L700,435L700,437L699,440L699,442L697,444L696,446L696,448L693,450L691,450L690,448L691,445L689,442L687,441L684,440L683,438L681,438L680,436L680,434L680,432L679,430L679,428L681,427L686,425L689,426L689,424L691,424L693,424L694,422L696,422L698,422L701,421L704,421L705,423L707,423L706,421L708,421L710,421L712,421L714,420L716,419L718,417L721,416L724,415ZM693,422L691,423L689,424L686,425L693,422Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="sonora" data-name="Sonora" d="M185,128L186,130L187,132L187,134L187,137L185,139L185,141L183,140L180,139L177,137L179,136L180,134L179,132L180,130L182,129L184,128ZM231,178L232,180L231,178ZM281,71L281,73L281,75L283,76L283,79L283,81L281,82L283,83L284,85L284,87L285,89L286,91L286,93L287,95L288,98L288,100L289,103L288,105L287,107L287,109L287,111L288,114L289,116L289,119L289,121L288,123L288,126L288,128L286,129L286,132L285,134L285,136L285,139L284,142L284,144L284,147L286,149L288,150L286,151L284,153L282,154L280,152L278,153L275,154L276,156L275,158L276,160L278,162L280,163L280,165L279,167L281,168L283,170L284,172L286,177L286,179L286,181L285,183L286,185L287,187L289,188L291,187L293,187L292,189L291,191L289,193L289,195L287,196L286,199L284,200L281,201L280,203L278,205L276,206L274,207L272,206L271,204L269,206L268,204L267,202L266,200L264,198L262,196L260,195L259,197L257,197L254,196L252,195L251,193L250,190L250,188L250,186L248,185L246,186L241,185L239,184L236,181L234,181L234,179L232,178L231,176L231,174L231,172L232,170L232,168L231,166L233,165L231,164L229,164L227,164L225,163L223,164L221,164L221,162L218,163L216,162L214,160L212,158L211,156L209,154L208,151L205,150L203,149L201,149L200,147L199,145L197,143L195,142L195,140L197,140L193,138L191,136L189,135L188,133L189,131L188,129L187,127L186,125L184,125L182,125L183,122L182,120L180,118L179,116L177,115L177,113L175,111L174,109L173,107L172,105L173,102L171,100L170,97L169,94L167,93L165,91L164,89L163,86L163,84L163,81L164,79L164,76L160,73L156,72L151,72L149,71L149,69L149,67L147,65L144,64L142,64L140,63L139,65L135,66L133,66L131,65L130,63L127,62L125,61L123,59L121,59L119,58L117,57L114,56L112,54L111,52L112,50L111,48L111,46L111,44L112,41L114,39L116,39L129,43L140,46L167,55L177,57L187,61L203,66L218,71L226,71L235,71L254,71L273,71L281,71ZM117,57L119,58L121,60L121,62L119,61L117,60L117,58Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="sinaloa" data-name="Sinaloa" d="M292,237L294,238L292,238ZM298,241L299,243L301,245L301,247L299,245L298,243L298,241ZM293,239L295,241L297,243L298,245L299,247L296,242L293,240ZM269,207L270,209L272,208L270,206L270,204L272,206L274,207L276,206L278,205L280,204L280,202L283,200L285,200L287,196L289,195L289,193L291,191L292,189L293,187L295,187L298,187L299,189L300,191L302,193L302,195L302,197L302,199L304,200L306,205L307,207L308,209L308,211L312,212L314,212L316,212L318,213L320,216L322,218L322,220L325,224L324,226L322,228L324,229L322,232L322,234L322,237L322,239L323,242L325,245L326,247L329,247L330,250L332,250L333,253L335,254L335,257L336,260L337,262L339,262L341,261L343,260L345,258L347,259L349,259L351,260L352,262L354,264L355,267L356,269L357,272L358,275L359,277L360,279L362,280L362,282L363,285L363,287L364,289L366,291L366,293L368,294L370,294L372,296L371,298L371,300L369,302L369,304L371,306L371,308L371,310L367,310L365,308L364,306L364,304L364,306L365,308L365,311L363,309L360,305L357,303L355,301L353,299L350,296L347,293L345,292L344,290L343,288L342,286L339,284L338,282L335,280L334,278L332,275L329,272L327,270L324,267L322,266L320,264L318,263L316,262L312,259L310,258L307,256L309,257L311,258L313,259L315,261L316,259L315,257L313,256L311,257L309,256L307,254L304,253L302,252L301,250L301,248L302,250L303,248L302,246L302,244L300,241L298,240L296,238L294,237L292,236L291,238L290,236L287,234L285,234L283,233L281,232L280,230L281,228L279,228L277,227L277,229L275,229L273,230L271,228L273,228L275,227L277,226L276,224L274,225L273,227L271,226L269,224L267,225L267,223L265,222L263,221L263,218L263,216L264,214L265,212L266,210L267,208L266,211L269,208Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="san-luis-potosi" data-name="San Luis Potosí" d="M516,290L517,293L519,295L518,297L518,299L519,302L520,304L523,304L525,305L527,305L529,305L531,306L532,304L534,306L536,306L538,308L539,311L540,313L543,314L545,314L548,314L550,314L553,314L555,315L558,315L562,316L564,319L564,321L562,321L561,324L558,325L559,328L561,330L559,331L557,332L557,335L557,337L559,337L559,339L557,340L555,342L554,344L552,346L550,346L549,344L547,343L545,343L543,342L542,340L540,338L539,336L537,336L536,339L534,339L531,339L529,337L527,336L525,336L524,338L522,339L520,339L517,339L516,337L514,336L511,334L508,333L506,333L505,335L504,337L501,337L499,336L496,334L493,332L491,332L488,331L486,330L483,329L480,329L479,327L481,324L482,322L482,319L481,317L483,313L484,309L482,305L480,306L477,309L475,311L473,311L471,311L469,311L469,309L468,307L466,307L464,306L462,304L460,304L458,302L457,300L458,297L459,295L457,292L458,290L458,287L461,288L464,288L465,286L467,285L469,284L472,283L474,281L475,278L477,277L480,276L483,274L483,272L483,270L483,267L486,265L488,264L489,261L492,261L493,258L495,257L496,255L497,257L499,257L501,258L501,260L499,262L501,264L503,267L504,269L505,271L505,274L506,277L506,279L505,282L505,284L505,286L506,288L506,290L508,292L510,292L512,290L516,290Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="quintana-roo" data-name="Quintana Roo" d="M880,362L879,364L877,367L874,370L872,369L872,367L875,364L877,364L879,363ZM869,335L867,337L865,337L867,337L869,335ZM814,434L814,432L817,429L817,427L817,423L816,421L816,419L816,417L815,414L816,409L816,407L817,405L817,403L818,401L818,399L815,396L814,394L812,393L810,391L808,390L807,388L808,386L808,384L811,383L813,382L816,381L819,380L821,380L822,378L824,379L826,376L828,375L830,375L832,374L834,373L835,370L837,370L838,372L838,370L838,368L840,367L842,367L844,367L848,366L849,364L851,363L854,361L855,358L856,356L858,353L857,350L857,348L857,346L858,344L858,339L860,339L863,339L866,340L868,339L870,337L870,335L872,336L874,337L875,340L876,342L876,344L878,342L877,340L878,342L877,344L878,346L879,348L878,350L877,354L875,356L873,358L872,360L870,362L868,364L866,366L864,368L863,371L861,372L860,374L859,376L859,378L860,380L860,382L859,384L857,384L856,386L854,387L852,388L853,390L855,392L858,390L861,390L861,392L859,394L857,394L855,396L855,399L857,399L858,397L860,397L859,399L858,402L856,406L855,408L855,410L854,412L853,414L852,419L852,422L850,424L850,427L848,427L849,425L849,423L847,422L845,420L843,419L844,417L845,415L845,413L845,411L843,410L842,412L841,414L840,416L838,418L837,420L835,419L832,420L831,422L830,424L829,427L827,428L827,430L825,432L823,434L822,437L821,435L819,434L817,433L815,434Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="queretaro" data-name="Querétaro" d="M545,343L544,345L544,347L542,347L539,348L536,349L536,351L535,354L533,355L532,357L532,359L532,361L530,362L528,362L526,363L524,364L523,366L523,368L523,370L521,372L521,375L519,377L517,377L515,377L512,374L511,372L509,371L509,369L507,368L505,365L505,363L504,361L503,359L504,357L505,354L507,354L509,354L511,353L513,353L515,353L517,351L517,349L519,347L521,345L522,347L524,347L526,345L527,343L524,342L526,340L526,338L524,337L526,336L528,336L530,338L533,339L535,339L537,336L539,336L540,338L542,340L543,342L545,343Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="puebla" data-name="Puebla" d="M610,421L609,423L607,426L605,426L603,427L601,429L599,428L597,428L595,428L593,431L592,433L590,434L589,432L588,430L587,427L585,426L587,425L586,423L584,423L582,425L581,427L581,429L584,431L582,433L580,433L578,432L576,432L574,432L572,432L570,433L568,434L565,435L563,432L561,434L559,434L558,432L556,431L554,431L555,429L552,429L550,427L548,425L547,423L550,422L551,420L553,419L556,421L557,419L556,415L556,413L556,411L557,409L558,407L559,405L559,400L558,397L558,395L558,393L560,393L562,395L564,397L566,400L568,401L571,402L574,400L576,399L578,400L580,397L582,397L585,397L586,395L584,394L582,391L580,392L580,390L578,388L575,386L572,387L570,387L568,383L569,380L570,376L571,374L570,372L568,372L567,370L569,370L571,369L572,367L574,366L575,362L576,360L577,358L578,356L580,356L582,355L582,357L580,358L582,358L582,360L586,363L585,365L583,365L581,366L582,370L582,373L584,373L586,375L589,373L591,371L593,372L596,373L598,373L598,375L596,377L595,380L594,382L594,384L592,388L592,391L592,393L594,395L596,395L598,396L601,397L602,399L597,399L596,402L596,406L595,408L594,410L594,413L595,415L598,416L600,416L600,418L601,420L603,420L605,418L608,419L610,421Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="oaxaca" data-name="Oaxaca" d="M686,456L685,458L684,460L684,463L683,465L681,466L680,468L678,473L679,476L679,479L679,481L677,482L675,482L673,481L672,479L671,481L673,483L675,483L678,484L679,486L677,485L674,484L671,483L669,482L667,482L663,482L665,480L666,478L664,477L662,478L661,480L661,478L659,476L657,476L656,478L654,478L653,480L657,481L659,481L657,482L653,482L651,482L649,483L647,484L645,485L645,487L643,488L641,488L639,488L637,490L634,490L631,491L629,492L627,493L624,494L621,496L619,496L616,496L614,497L611,496L609,495L605,494L603,493L600,493L599,491L597,490L595,489L593,489L591,489L589,489L587,488L584,488L582,488L580,488L578,487L575,485L570,482L568,482L566,480L563,480L561,480L558,479L560,477L563,475L564,473L566,471L568,469L570,467L572,466L573,463L573,461L571,460L571,458L570,456L568,456L567,453L568,451L568,447L565,442L565,439L566,437L567,435L569,433L572,432L574,432L576,432L578,432L580,433L582,433L584,432L582,430L581,427L582,425L584,423L586,423L587,425L585,426L587,427L588,429L589,432L590,434L592,433L593,431L595,429L597,428L599,428L601,429L603,427L605,426L607,426L608,424L609,422L611,421L612,419L611,417L613,417L614,419L614,421L616,423L618,424L620,424L621,426L623,426L623,428L625,427L627,427L629,428L631,428L632,430L632,432L631,435L630,437L630,439L631,442L631,444L634,445L637,445L642,442L644,442L646,441L649,441L647,442L647,444L649,446L651,449L654,450L654,452L654,454L661,455L666,455L678,456L686,456Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="nuevo-leon" data-name="Nuevo León" d="M527,170L525,172L523,173L521,173L521,175L523,176L525,176L525,178L526,180L526,183L527,185L528,187L526,188L525,191L527,192L529,193L528,196L528,198L530,198L531,200L533,200L534,203L537,207L539,209L541,209L542,211L543,213L546,213L548,216L550,216L552,215L554,215L557,215L558,217L558,219L558,221L558,223L558,225L559,227L562,229L561,231L560,233L557,235L555,236L551,236L549,238L549,240L546,240L545,238L543,240L541,241L542,243L542,245L540,246L540,248L538,248L536,248L535,250L533,250L531,252L528,253L526,254L525,256L528,257L529,259L529,262L528,265L528,267L530,268L531,271L533,273L534,275L531,274L531,276L529,277L525,276L523,277L522,280L520,282L520,284L520,286L520,288L518,288L516,288L516,290L513,290L510,291L508,292L506,290L506,288L505,286L505,284L505,282L506,280L506,278L505,275L505,272L504,269L503,267L501,265L500,262L501,260L501,258L499,257L497,257L496,255L497,253L497,251L497,249L495,248L496,246L498,245L498,243L497,240L498,238L499,236L501,236L504,235L507,237L509,237L511,237L512,235L510,233L506,232L506,230L503,230L502,226L499,225L497,224L496,222L496,220L496,218L497,216L495,216L493,213L490,210L488,208L485,205L488,202L489,199L491,198L494,198L496,197L500,196L501,194L503,191L503,188L503,186L501,186L499,186L499,188L495,186L495,183L496,181L498,179L500,179L502,178L504,178L505,176L507,172L508,170L511,170L513,169L516,170L518,170L521,169L523,168L525,168L527,170Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="nayarit" data-name="Nayarit" d="M365,309L365,311L365,313L366,317L366,319L365,316L365,314L363,310L365,311L364,309ZM338,330L338,332L338,330ZM338,332L340,333L342,334L342,336L340,336L339,334L338,332ZM401,313L401,315L401,317L402,320L401,323L401,325L403,325L404,327L406,327L406,329L407,331L410,332L412,332L413,335L414,337L416,338L415,342L415,344L413,346L411,346L409,347L407,347L405,347L404,351L403,353L403,355L401,357L402,359L403,361L403,363L402,361L401,359L399,358L397,357L395,354L392,354L390,352L387,352L384,354L381,354L379,356L377,357L376,359L374,358L372,359L370,358L371,356L372,354L374,352L375,350L377,350L377,348L377,346L377,343L377,340L378,338L376,337L374,336L372,335L370,331L368,328L366,325L365,323L366,321L367,319L368,321L370,322L370,320L368,320L368,318L366,317L366,313L365,311L365,309L367,310L370,310L372,309L371,307L370,305L369,303L370,301L371,299L372,296L374,297L377,298L379,298L381,299L383,299L384,302L386,302L386,304L384,305L382,306L384,311L386,311L387,308L388,310L391,310L393,313L394,315L396,316L399,314L401,313ZM344,338L346,338L346,340L344,339Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="morelos" data-name="Morelos" d="M550,404L552,406L555,407L557,405L559,405L558,407L557,409L556,411L556,413L556,415L557,419L556,421L553,418L552,420L550,422L547,423L545,421L541,421L539,420L537,419L535,417L534,415L536,412L537,410L538,408L539,406L540,404L542,404L545,404L549,404Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="michoacan" data-name="Michoacán" d="M509,371L511,372L512,374L515,377L516,379L517,381L515,383L515,385L513,386L512,388L514,393L513,395L511,397L510,401L509,403L507,405L505,406L505,408L503,409L500,412L500,410L498,411L498,413L499,415L499,420L501,422L502,425L500,423L498,423L496,422L494,422L492,420L490,419L487,419L484,418L482,419L479,420L476,419L475,417L473,417L471,417L469,418L467,420L467,422L468,425L466,427L464,427L462,428L460,429L460,432L461,434L458,434L456,434L454,433L452,432L448,432L446,431L443,431L438,428L436,428L434,428L432,427L430,426L428,426L426,425L424,424L423,422L422,419L420,418L419,416L417,414L418,412L420,411L420,409L422,409L424,407L426,406L428,407L430,405L432,407L434,405L437,404L439,401L441,400L444,399L446,398L448,396L449,394L445,393L444,391L444,389L443,386L444,384L443,382L441,381L439,380L437,380L435,380L436,378L436,376L438,374L440,375L442,376L445,375L446,373L448,372L450,371L453,370L456,369L458,370L460,369L462,368L464,369L466,370L466,372L468,373L470,373L472,373L475,370L477,370L479,370L482,372L480,372L480,374L480,377L483,378L486,379L487,377L489,377L491,377L492,380L495,380L497,381L501,381L503,380L505,379L505,381L505,379L508,378L510,377L510,374L509,372Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="mexico" data-name="México" d="M555,391L556,393L558,393L558,395L557,397L558,399L559,405L557,405L556,407L553,407L551,405L550,403L550,401L550,399L548,398L547,396L545,393L544,391L542,394L541,396L539,397L537,398L538,401L540,403L539,406L538,408L537,410L536,412L534,414L532,415L530,415L528,414L526,416L524,417L520,418L518,418L518,420L516,421L514,423L512,423L510,421L508,420L506,420L508,418L508,416L506,413L507,411L507,409L508,407L508,405L509,403L510,401L511,398L512,395L514,393L513,389L512,387L515,386L515,383L517,381L516,379L516,377L518,377L521,375L520,373L522,372L523,370L524,372L526,372L528,373L530,374L532,374L533,376L535,378L534,380L536,382L537,384L536,386L538,386L538,384L540,384L541,382L542,380L546,378L548,377L550,377L550,380L549,383L547,383L547,385L549,387L549,385L552,384L554,383L556,383L557,385L556,387L555,389L555,391Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="jalisco" data-name="Jalisco" d="M444,333L446,332L448,332L451,332L454,334L456,334L458,334L460,333L462,330L465,328L467,328L467,326L465,324L467,323L469,324L472,325L475,327L477,328L476,330L475,332L474,338L474,341L474,343L472,343L471,346L469,348L467,351L465,354L463,355L462,357L462,359L464,359L465,362L464,364L463,366L463,369L460,369L458,370L456,369L454,370L451,370L449,372L447,373L445,375L443,375L441,375L438,374L437,376L436,378L435,380L437,380L439,380L441,381L443,381L444,383L444,385L444,389L444,391L444,393L448,393L448,395L446,398L445,400L442,399L439,401L437,403L435,404L432,407L431,405L428,407L426,406L424,407L424,405L423,403L424,401L424,399L424,397L422,395L422,391L420,392L418,393L415,395L413,395L410,394L408,396L406,397L404,397L402,397L400,398L398,398L396,398L394,400L392,400L390,400L388,399L388,397L384,397L382,395L381,393L381,391L378,389L376,387L374,385L372,381L370,380L370,378L368,376L368,374L368,372L365,370L364,367L366,367L369,365L372,365L375,365L376,363L377,361L375,360L377,357L379,356L380,354L383,354L386,353L389,351L391,353L394,354L397,357L399,358L401,359L402,361L403,363L403,361L402,359L401,357L403,356L403,354L404,351L404,348L407,347L409,347L411,346L413,346L415,344L415,342L416,339L415,337L413,335L413,333L410,332L408,332L406,329L406,327L404,327L403,325L401,326L401,323L401,321L402,318L403,316L405,317L405,315L406,313L408,312L409,315L411,314L410,311L409,309L411,307L413,306L415,306L417,307L415,309L414,311L412,315L412,317L412,319L414,320L415,317L415,314L415,312L417,311L419,311L421,311L422,313L423,315L421,318L420,320L419,322L421,323L423,323L425,323L426,321L428,320L428,318L428,316L430,315L432,315L432,317L435,318L434,322L434,324L432,326L429,327L427,328L425,330L423,331L422,333L422,336L420,338L418,338L419,340L420,342L422,341L422,343L417,345L418,347L420,347L421,349L423,350L425,350L428,351L430,351L432,350L434,351L436,348L438,347L441,346L443,344L446,343L447,341L447,339L444,337L444,335L444,333Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="hidalgo" data-name="Hidalgo" d="M559,340L560,342L560,344L562,346L565,346L568,346L570,349L569,351L568,354L568,356L565,355L562,357L561,361L560,364L560,366L561,368L564,368L566,367L569,364L571,363L573,361L575,362L575,365L572,367L571,369L569,370L567,370L568,372L570,372L571,374L570,376L570,379L568,382L569,387L567,386L566,388L564,389L562,389L560,389L557,390L555,391L555,389L556,387L557,385L557,383L554,383L552,384L550,384L549,387L547,385L547,383L549,383L549,380L550,378L548,377L546,378L542,379L542,381L541,383L539,383L538,385L536,386L537,384L536,382L535,380L535,378L533,376L532,374L530,374L528,373L526,372L524,372L523,370L523,368L523,366L524,364L526,363L528,362L530,362L532,361L532,359L532,357L533,355L535,354L536,352L537,350L538,348L541,348L543,347L544,345L545,343L547,343L549,344L550,346L552,346L553,344L555,342L557,340L559,340Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="guerrero" data-name="Guerrero" d="M534,415L534,417L536,418L538,420L541,421L545,421L547,423L547,425L549,426L551,428L554,429L554,431L556,431L558,432L559,434L561,434L563,432L565,435L567,435L566,437L565,439L565,441L567,446L568,451L567,453L567,455L570,456L571,458L571,460L573,461L573,463L572,465L571,467L569,468L566,471L564,473L563,475L561,477L558,479L556,476L554,474L552,472L550,473L547,472L541,470L537,469L534,469L532,469L530,469L528,468L526,467L524,465L522,464L520,463L516,462L514,461L508,459L506,458L502,457L497,455L495,454L490,453L490,451L488,450L487,448L484,447L480,446L479,444L477,443L475,442L474,440L472,439L471,437L466,434L464,433L462,433L460,433L460,429L462,428L464,427L466,427L468,426L468,423L468,421L468,418L470,418L472,417L475,417L476,419L478,420L481,419L483,419L486,418L490,419L492,419L493,421L495,421L498,422L500,424L502,425L502,423L499,420L499,416L498,413L498,411L500,410L500,412L502,410L504,408L505,406L507,405L508,407L507,409L507,411L506,413L507,415L509,417L506,420L508,420L510,421L511,423L514,423L515,421L517,421L518,419L520,418L524,418L526,417L528,415L530,415L532,415L534,415Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="guanajuato" data-name="Guanajuato" d="M525,337L525,339L525,341L527,342L527,344L525,346L523,347L521,345L519,346L518,348L517,351L515,352L513,353L511,353L509,354L507,354L505,354L504,356L503,359L504,361L505,363L505,365L506,367L509,369L509,371L510,373L509,376L508,378L506,379L505,381L505,379L503,380L501,381L497,381L495,380L492,379L491,377L489,377L487,377L486,379L484,378L481,378L480,375L480,372L482,373L480,371L478,370L475,370L473,372L471,373L469,373L467,373L466,371L465,369L463,369L463,367L464,364L465,362L464,359L462,359L461,357L463,355L465,354L466,352L468,349L470,347L472,344L474,343L475,341L475,339L475,333L476,331L477,329L479,329L482,329L485,330L488,331L490,331L492,332L496,334L498,335L501,337L504,337L505,335L506,333L508,333L510,333L513,335L515,336L517,339L519,338L522,339L524,338Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="durango" data-name="Durango" d="M414,195L418,197L420,199L422,200L423,202L424,205L424,208L425,210L426,213L425,215L426,217L426,219L427,221L426,223L426,225L424,225L423,228L425,229L426,231L423,231L422,233L423,236L424,238L428,241L428,243L429,245L432,247L434,248L437,248L439,249L441,249L440,247L441,245L444,242L445,244L446,246L448,246L448,248L448,250L448,252L449,254L450,256L450,258L446,259L443,259L441,259L439,259L437,259L435,258L433,259L430,258L428,258L426,258L424,259L424,261L421,262L420,264L416,267L414,268L414,270L414,273L415,275L415,278L415,280L414,282L412,283L410,285L410,288L409,290L408,293L407,295L406,297L407,301L407,303L407,305L407,307L403,308L402,310L401,313L399,314L397,315L395,315L393,313L391,310L389,310L387,308L386,310L385,312L382,307L384,305L386,304L386,302L384,302L384,300L382,299L380,299L378,297L375,298L372,296L370,294L368,294L366,294L366,291L364,289L363,287L363,285L363,283L362,281L360,279L359,277L358,275L357,273L356,269L355,267L355,265L353,263L351,260L349,259L347,259L345,258L343,260L341,261L339,262L337,262L336,260L335,258L335,255L333,254L332,250L330,250L329,247L327,247L325,246L324,242L323,240L322,237L322,234L322,232L323,230L322,228L324,226L326,225L325,223L327,222L328,224L330,224L333,225L335,227L336,225L338,224L340,222L342,220L342,218L341,216L342,213L344,211L343,209L345,209L346,207L348,206L347,204L348,202L348,199L349,197L349,195L351,195L351,193L353,194L356,194L358,195L359,197L361,198L364,200L366,201L368,201L370,202L372,203L374,202L376,202L377,200L379,201L383,201L385,203L387,204L390,203L392,204L392,201L394,198L396,198L397,196L399,196L398,194L400,194L402,194L404,196L406,195L408,195L410,194L413,195Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="ciudad-de-mexico" data-name="Ciudad de México" d="M550,404L546,405L543,405L540,404L539,401L538,399L539,397L541,396L542,394L543,392L545,393L546,395L547,397L549,398L550,400L550,402L550,404Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="colima" data-name="Colima" d="M424,407L422,409L420,409L420,411L418,412L417,414L414,411L412,410L409,408L406,407L402,405L402,403L400,402L398,403L396,402L394,402L391,401L393,400L395,399L397,399L399,397L401,397L404,397L406,397L408,396L410,395L413,395L415,395L418,393L420,392L421,390L422,394L423,396L424,398L424,400L424,402L424,404L424,406Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="coahuila" data-name="Coahuila" d="M523,168L521,169L519,170L516,170L514,170L511,170L509,170L507,171L505,175L505,177L502,178L500,179L498,179L496,181L495,183L495,185L498,188L499,186L501,185L503,186L503,188L503,190L502,193L501,195L496,196L494,198L491,198L489,199L488,201L486,204L488,208L490,210L493,212L494,215L496,216L496,218L496,220L496,222L497,224L499,225L502,225L503,229L506,230L506,232L509,233L511,234L511,236L509,237L507,237L505,236L502,235L499,236L498,238L497,240L498,242L498,245L496,245L495,247L497,249L497,251L497,253L497,255L494,254L492,256L489,255L487,252L486,250L484,249L481,249L479,249L476,250L474,249L474,247L472,247L469,244L467,242L464,241L461,239L458,239L455,239L452,239L450,239L447,240L445,240L444,242L441,244L440,247L441,249L439,249L437,248L435,248L433,247L430,246L428,244L428,241L425,239L423,236L422,233L423,231L425,231L425,229L423,229L424,225L426,225L426,223L427,221L426,219L426,217L425,215L426,213L425,210L424,208L424,206L423,202L422,200L420,199L418,197L415,196L413,193L411,192L411,190L413,188L415,188L415,186L413,185L412,180L412,176L412,174L410,173L410,169L411,167L410,165L410,163L412,163L412,161L410,161L410,159L412,160L414,158L415,154L417,152L416,150L417,148L419,147L419,145L421,145L423,143L424,140L426,140L427,138L425,138L426,135L427,133L431,134L433,134L435,133L436,131L438,130L440,129L441,127L441,125L443,123L443,121L444,119L445,117L446,115L448,114L450,114L452,113L454,113L455,111L457,110L459,111L461,112L463,113L465,112L468,112L470,112L473,113L475,113L477,112L480,113L482,115L484,117L485,119L487,120L489,121L492,124L494,125L497,127L498,129L501,131L501,133L501,135L503,137L503,139L505,139L505,141L506,143L507,145L509,147L510,149L511,153L512,155L515,156L517,157L518,159L520,161L521,163L522,165L522,167Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="chihuahua" data-name="Chihuahua" d="M427,133L426,135L425,137L427,138L426,140L424,140L423,142L422,144L419,145L419,147L417,148L416,150L417,152L415,154L414,157L413,160L410,159L410,161L412,161L412,163L410,163L411,165L411,167L410,169L410,173L412,174L412,176L412,180L413,185L415,186L415,188L413,188L411,189L411,192L413,193L414,195L411,194L408,195L406,195L404,196L402,194L400,194L398,194L400,195L398,196L396,198L394,198L393,200L393,203L390,203L388,204L385,203L384,201L380,201L378,200L376,202L374,202L372,203L370,202L368,201L366,201L364,200L362,198L360,198L358,196L356,195L354,194L352,193L351,195L349,195L349,197L348,199L348,201L348,203L348,205L346,207L345,209L343,209L344,211L342,212L341,215L342,217L342,219L340,222L338,224L336,225L335,227L333,225L331,225L329,224L327,222L325,223L322,221L322,219L320,216L318,213L316,212L314,212L312,212L309,211L308,209L307,207L306,205L304,201L303,199L302,197L302,195L302,193L301,190L299,190L299,188L296,187L293,187L291,187L289,188L287,187L285,186L286,184L285,182L286,179L287,177L285,173L283,170L281,168L279,167L280,165L280,163L278,162L276,160L275,158L276,156L274,155L278,153L280,152L282,154L284,153L286,151L288,150L286,149L284,148L284,145L283,143L285,140L284,137L285,135L285,133L286,130L288,129L288,127L288,123L289,121L289,119L289,116L288,114L288,112L287,109L287,107L288,105L289,103L287,101L288,99L287,96L287,94L286,91L285,89L285,87L284,85L283,83L281,82L283,82L283,80L283,77L281,75L281,73L281,71L291,71L296,71L296,58L316,58L342,58L345,59L348,63L349,65L351,67L353,68L356,69L358,71L360,72L362,74L364,75L366,76L367,78L368,80L370,80L372,82L372,84L375,84L377,85L379,86L381,87L383,88L384,90L386,91L387,93L387,95L388,97L390,99L391,101L392,103L391,105L392,107L392,109L394,112L395,114L396,116L398,117L400,118L401,120L403,120L405,121L406,123L408,125L411,126L413,126L417,127L418,129L420,129L423,130L425,132L427,133Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="chiapas" data-name="Chiapas" d="M679,486L681,485L679,486ZM679,481L679,479L679,477L678,474L680,468L681,466L683,465L684,463L684,460L685,458L686,456L689,454L691,452L693,451L696,448L696,446L697,444L699,442L699,440L699,438L700,435L702,434L704,434L706,436L708,437L710,436L710,438L709,440L708,442L710,443L711,446L714,447L714,449L716,450L718,449L721,447L723,446L725,444L727,443L729,441L731,441L732,439L732,437L734,438L736,438L737,436L739,437L741,437L743,437L743,439L744,441L746,441L747,443L747,445L746,447L748,448L751,449L753,450L754,452L752,453L754,455L756,455L757,457L759,460L761,461L762,463L764,463L766,464L768,466L770,467L772,468L773,470L773,472L775,474L777,475L780,476L780,478L779,480L779,482L779,484L764,485L762,485L752,485L744,485L740,491L737,497L734,501L733,503L731,507L735,513L733,514L733,516L733,518L732,521L733,523L732,525L730,527L727,524L725,522L723,520L716,513L714,511L713,509L709,506L705,503L701,498L696,495L691,491L688,489L685,488L686,486L684,485L682,484L680,484L679,481Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="campeche" data-name="Campeche" d="M749,412L747,413L746,415L744,415L742,416L744,414L746,413L748,412ZM781,357L780,364L784,365L786,367L788,367L790,367L792,368L792,370L794,371L796,375L798,376L800,377L801,379L803,382L805,383L806,386L806,388L808,390L810,391L812,393L814,394L815,396L817,398L818,401L817,403L817,405L816,407L816,409L815,414L815,416L817,418L817,420L817,423L817,427L817,429L815,431L814,434L814,438L798,438L780,438L764,438L764,436L761,435L759,435L757,433L755,432L753,431L751,431L749,431L748,433L748,435L746,435L744,436L742,435L740,435L738,433L736,431L734,430L733,428L732,426L731,424L730,422L728,421L726,420L724,416L726,415L730,415L732,414L736,414L738,414L739,416L741,416L740,418L738,416L737,418L739,418L741,419L743,420L746,421L748,421L750,421L751,419L754,418L756,416L757,414L757,412L755,412L753,410L755,408L753,410L751,411L753,409L755,407L757,407L760,405L762,404L764,403L766,401L768,400L770,398L771,396L772,394L772,390L772,388L773,386L774,384L776,383L778,382L779,380L778,378L778,375L778,373L778,370L778,368L777,365L778,363L779,361L779,359L781,357Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="baja-california-sur" data-name="Baja California Sur" d="M229,234L228,236L228,234ZM189,235L190,237L189,239L189,241L189,243L189,245L187,246L188,248L189,250L189,252L191,255L189,253L189,251L188,249L186,249L186,247L187,243L189,238L189,235ZM226,223L227,226L225,225L226,223ZM219,223L219,225L219,223ZM135,162L171,163L172,165L174,168L176,169L177,171L179,171L182,172L183,174L184,176L185,178L187,180L188,182L189,184L191,185L193,185L193,187L193,189L194,191L196,193L196,195L197,197L199,200L201,200L199,197L198,195L197,192L199,191L201,194L203,195L205,197L205,199L205,201L207,201L207,203L208,205L210,207L209,209L210,211L211,213L211,216L211,218L212,221L214,224L215,226L217,228L220,229L220,232L222,234L222,237L223,239L225,241L227,242L227,244L229,246L229,248L229,250L228,252L227,255L229,257L229,259L230,261L231,263L234,265L237,265L239,265L237,266L239,266L239,264L238,262L239,260L241,260L242,262L244,264L247,266L248,269L251,269L253,269L252,271L254,273L256,275L255,277L256,279L258,280L260,281L262,282L262,284L263,286L263,289L262,292L260,294L258,295L255,296L253,298L251,300L248,301L246,298L244,296L244,294L243,291L243,289L242,287L240,284L238,282L235,280L233,279L231,278L227,274L224,272L223,270L221,269L219,267L214,264L210,262L207,260L205,259L203,256L202,254L199,255L197,252L196,250L194,249L192,250L190,249L191,247L190,245L190,243L190,245L189,247L189,245L189,243L190,241L189,239L190,237L190,235L191,233L191,231L191,229L191,226L190,224L190,222L189,219L188,217L187,215L185,214L184,212L182,209L180,208L176,207L174,206L171,204L169,202L167,201L165,200L164,198L163,196L162,194L160,195L162,193L162,191L161,189L160,191L160,193L158,195L156,194L154,194L152,194L151,196L149,196L148,194L146,194L145,192L144,190L142,189L140,188L137,188L136,186L134,184L131,184L129,184L127,184L125,182L125,179L125,177L123,176L121,175L119,174L117,172L116,170L114,170L112,168L110,166L112,166L114,166L116,166L118,166L120,167L122,167L124,167L126,167L128,166L130,164L131,166L130,168L133,169L136,172L137,170L139,170L141,173L143,172L141,171L142,169L141,167L140,165L139,167L135,169L134,167L135,164L135,162ZM238,255L239,257L238,259L237,257L238,255ZM160,196L162,197L159,196ZM193,256L196,256L198,257L200,258L201,260L199,260L196,258L194,257ZM249,260L251,262L252,264L253,266L251,266L250,263L249,261ZM219,214L218,216L216,217L215,219L214,217L216,216L215,214L217,214L219,214ZM190,224L190,226L190,229L190,227L190,224ZM228,240L231,242L232,244L233,246L230,245L229,242L228,240ZM191,181L192,183L190,182ZM221,409L222,411L222,413L220,412L220,410Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+<path id="baja-california" data-name="Baja California" d="M169,143L171,144L173,145L171,145L169,143ZM151,119L153,120L155,121L156,123L156,125L160,126L161,129L161,131L163,132L163,134L161,133L159,132L158,130L156,129L154,127L152,126L150,123L151,120ZM106,151L107,154L107,156L106,158L106,160L104,159L102,159L103,157L105,155L104,153L105,151ZM135,162L133,163L131,164L133,161L135,159L135,161ZM178,141L178,143L176,142L178,141ZM117,39L115,39L113,40L112,43L110,45L112,47L112,49L111,52L111,54L113,55L116,56L116,59L117,61L117,63L115,66L116,68L115,70L115,72L114,75L115,77L117,78L116,80L119,81L120,83L120,85L120,87L120,90L121,92L121,94L121,97L121,99L121,101L122,104L123,106L124,108L126,109L128,110L128,112L129,114L131,114L133,114L135,115L137,117L139,119L141,121L143,122L145,123L147,125L149,126L148,128L149,130L151,132L151,135L152,137L153,135L155,136L156,138L159,138L161,141L162,143L162,145L163,147L165,148L167,149L169,149L170,151L169,153L171,156L171,158L171,161L172,163L136,162L136,160L138,161L136,160L136,158L137,156L137,154L135,154L137,151L137,149L137,147L135,146L134,144L132,143L130,141L129,139L127,137L125,136L123,135L122,132L120,131L118,129L116,128L115,126L113,125L111,123L109,123L107,123L106,121L103,119L101,119L99,117L96,116L93,114L93,112L93,110L91,108L90,105L90,103L90,100L89,98L87,96L85,95L83,94L83,91L84,89L83,87L82,85L80,83L78,82L75,81L76,77L76,75L74,73L72,71L71,69L69,67L66,65L66,63L65,60L67,59L68,57L66,56L64,55L64,53L62,53L60,52L60,49L59,47L58,45L56,45L56,43L54,39L66,37L77,36L84,35L94,35L110,34L119,33L117,35L117,37L117,39ZM23,129L22,131L24,132L24,134L24,136L22,137L22,135L21,133L20,131L21,129L23,129Z" class="iza" fill="#3B82C4" fill-opacity="0.25" stroke="#1A4F8C" stroke-width="0.8"/>
+<path id="aguascalientes" data-name="Aguascalientes" d="M444,333L442,331L441,329L442,326L444,325L446,323L446,320L447,318L450,317L452,316L454,315L456,313L459,316L463,318L464,320L465,322L465,324L467,326L467,328L465,328L463,329L461,332L459,333L456,334L454,334L452,333L448,332L446,332L444,333Z" fill="#E8E8E8" stroke="#bbb" stroke-width="0.5"/>
+</svg>
+    </div>
+    <div class="states-grid">
+      <div class="state-item rv" data-state="campeche" style="transition-delay:.04s">Campeche</div>
+      <div class="state-item rv" data-state="chihuahua" style="transition-delay:.07s">Chihuahua</div>
+      <div class="state-item rv" data-state="ciudad-de-mexico" style="transition-delay:.1s">Ciudad de México</div>
+      <div class="state-item rv" data-state="mexico" style="transition-delay:.13s">Estado de México</div>
+      <div class="state-item rv" data-state="baja-california" style="transition-delay:.16s">Tijuana</div>
+      <div class="state-item rv" data-state="puebla" style="transition-delay:.19s">Puebla</div>
+      <div class="state-item rv" data-state="tamaulipas" style="transition-delay:.22s">Tampico</div>
+      <div class="state-item rv" data-state="queretaro" style="transition-delay:.25s">Querétaro</div>
+      <div class="state-item rv" data-state="quintana-roo" style="transition-delay:.28s">Quintana Roo</div>
+      <div class="state-item rv" data-state="san-luis-potosi" style="transition-delay:.31s">San Luis Potosí</div>
+      <div class="state-item rv" data-state="chiapas" style="transition-delay:.34s">Chiapas</div>
+      <div class="state-item rv" data-state="veracruz" style="transition-delay:.37s">Veracruz</div>
+      <div class="state-item rv" data-state="nayarit" style="transition-delay:.4s">Nayarit</div>
+      <div class="state-item rv" data-state="durango" style="transition-delay:.43s">Durango</div>
+      <div class="state-item rv" data-state="jalisco" style="transition-delay:.46s">Guadalajara</div>
+      <div class="state-item rv" data-state="hidalgo" style="transition-delay:.49s">Pachuca</div>
+      <div class="state-item rv" data-state="morelos" style="transition-delay:.52s">Morelos</div>
+      <div class="state-item rv" data-state="yucatan" style="transition-delay:.55s">Mérida</div>
+      <div class="state-item rv" data-state="nuevo-leon" style="transition-delay:.58s">Monterrey</div>
+      <div class="state-item rv" data-state="guanajuato" style="transition-delay:.61s">León</div>
+    </div>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S9 · PROYECTOS HEADER ═══════ -->
+<section class="slide" id="s9">
+  <div class="s9-center">
+    <div class="pill rv">05 · Proyectos Concluidos</div>
+    <h2 class="proj-h rv" style="transition-delay:.15s">PROYECTOS<br>CONCLUIDOS</h2>
+    <p class="rv" style="font-weight:300;color:var(--text3);font-size:clamp(.9rem,1.6vw,1.2rem);transition-delay:.3s">Portafolio selecto 2020 - 2026</p>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<!-- ═══════ S10 · ROSEWOOD MAYAKOBA ═══════ -->
+<section class="slide ps" id="s10">
+  <div class="ps-spine">Hotelería</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Rosewood<br>Mayakoba</h2><p class="pl">Playa del Carmen, Quintana Roo</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Proyecto de instalaciones especiales en uno de los 100 mejores hoteles del mundo según Travel + Leisure.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">CCTV &amp; Seguridad</div>
+      <div class="scope-tag">Redes y Telecomunicaciones</div>
+      <div class="scope-tag">Domótica &amp; Control</div>
+    </div>
+    <div class="pill rv" style="transition-delay:.4s">Top 100 Hotels — Travel + Leisure</div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf pf-duo ph">
+      <img src="assets1/proyectos/hoteleria/1-rosewood/slide10_img3.jpg" alt="Rosewood Mayakoba" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/1-rosewood/slide9_img2.jpg" alt="Rosewood Mayakoba – Muro exterior" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/hoteleria/1-rosewood/slide10_img7.jpg" alt="Rosewood Mayakoba" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/1-rosewood/slide10_img4.jpg" alt="Rosewood Mayakoba – Comedor" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/hoteleria/1-rosewood/slide10_img8.jpg" alt="Rosewood Mayakoba" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/1-rosewood/slide10_img6.jpg" alt="Rosewood Mayakoba – Interior" loading="lazy">
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══════ S10b · VILLAS DE ROSEWOOD ═══════ -->
+<section class="slide ps" id="s10b">
+  <div class="ps-spine">Hotelería</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Rosewood<br>Mayakoba</h2><p class="pl">Villas de Rosewood</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones especiales para las exclusivas Villas de Rosewood Mayakoba en la Riviera Maya.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf pf-trio ph">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/dsc-0005.webp" alt="Villas de Rosewood – Fachada exterior" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/dsc-0011.webp" alt="Villas de Rosewood – Entrada" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/dsc-0015.webp" alt="Villas de Rosewood – Acceso con jardín" loading="lazy">
+    </div>
+    <div class="pf pf-trio">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/whatsapp-image-2019-12-19-at-7.37.54-am-3.webp" alt="Villas de Rosewood – Alberca" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/whatsapp-image-2019-12-19-at-7.37.54-am-38.webp" alt="Villas de Rosewood – Vista nocturna" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/whatsapp-image-2019-12-19-at-7.37.54-am-5.webp" alt="Villas de Rosewood – Jacuzzi con fuente" loading="lazy">
+    </div>
+    <div class="pf pf-trio">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/whatsapp-image-2019-12-19-at-7.37.54-am-2.webp" alt="Villas de Rosewood – Interior sala" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/whatsapp-image-2019-12-19-at-7.37.55-am-4.webp" alt="Villas de Rosewood – Baño" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/2-villas-rosewood/whatsapp-image-2020-01-02-at-4.11.45-pm.webp" alt="Villas de Rosewood – Sala doble altura" loading="lazy">
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══════ S10c · ALILA MAYAKOBA ═══════ -->
+<section class="slide ps" id="s10c">
+  <div class="ps-spine">Hotelería</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Alila<br>Mayakoba</h2><p class="pl">Hyatt</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones especiales para el resort Alila Mayakoba, parte de la colección Hyatt en la Riviera Maya.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m2">
+    <div class="pf pf-trio">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-21.webp" alt="Alila Mayakoba – Alberca y playa" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-31-3.webp" alt="Alila Mayakoba – Terraza playa" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-31-4.webp" alt="Alila Mayakoba – Lounge frente al mar" loading="lazy">
+    </div>
+    <div class="pf pf-trio">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-9.webp" alt="Alila Mayakoba – Lobby" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-7.webp" alt="Alila Mayakoba – Pérgola nocturna" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-6.webp" alt="Alila Mayakoba – Lobby interior" loading="lazy">
+    </div>
+    <div class="pf pf-trio">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-17.webp" alt="Alila Mayakoba – Restaurante" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-26.webp" alt="Alila Mayakoba – Lounge" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-31-6.webp" alt="Alila Mayakoba – Terraza corredor" loading="lazy">
+    </div>
+    <div class="pf pf-trio">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-13.webp" alt="Alila Mayakoba – Baños" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-28.webp" alt="Alila Mayakoba – Pasillo" loading="lazy">
+      <img src="assets1/proyectos/hoteleria/3-alila-mayakoba/photo-2026-05-07-12-03-32-19.webp" alt="Alila Mayakoba – Vestíbulo con luz natural" loading="lazy">
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══════ S10d · BANYAN TREE MAYAKOBA ═══════ -->
+<section class="slide ps" id="s10d">
+  <div class="ps-spine">Hotelería</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Banyan Tree<br>Mayakoba</h2><p class="pl">Harmony</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones especiales para el resort Banyan Tree Mayakoba, complejo Harmony en la Riviera Maya.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/hoteleria/4-banyan-tree/photo-2025-12-06-18-55-21.webp" alt="Banyan Tree Mayakoba – Sala comedor" loading="lazy"><img src="assets1/proyectos/hoteleria/4-banyan-tree/photo-2025-09-24-17-02-48-3.webp" alt="Banyan Tree Mayakoba – Pasillo" loading="lazy"><img src="assets1/proyectos/hoteleria/4-banyan-tree/photo-2025-12-06-18-55-23-3.webp" alt="Banyan Tree Mayakoba – Villa y alberca nocturna" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/hoteleria/4-banyan-tree/imagen-3.webp" alt="Banyan Tree Mayakoba – Alberca" loading="lazy"><img src="assets1/proyectos/hoteleria/4-banyan-tree/imagen-1.webp" alt="Banyan Tree Mayakoba – Interior" loading="lazy"><img src="assets1/proyectos/hoteleria/4-banyan-tree/imagen-4.webp" alt="Banyan Tree Mayakoba – Recámara" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/hoteleria/4-banyan-tree/photo-2025-12-06-18-55-22-7.webp" alt="Banyan Tree Mayakoba – Comedor" loading="lazy"><img src="assets1/proyectos/hoteleria/4-banyan-tree/photo-2025-12-06-18-55-22-2-2.webp" alt="Banyan Tree Mayakoba – Baño" loading="lazy"><img src="assets1/proyectos/hoteleria/4-banyan-tree/photo-2025-12-06-18-55-22-3.webp" alt="Banyan Tree Mayakoba – Escritorio y sala" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S10e · FAIRMONT MAYAKOBA ═══════ -->
+<section class="slide ps" id="s10e">
+  <div class="ps-spine">Hotelería</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Fairmont<br>Mayakoba</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones especiales para el resort Fairmont Mayakoba en la Riviera Maya.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/hoteleria/5-fairmont/imagen-5.webp" alt="Fairmont Mayakoba – Lobby" loading="lazy"><img src="assets1/proyectos/hoteleria/5-fairmont/imagen-4.webp" alt="Fairmont Mayakoba – Sala" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/hoteleria/5-fairmont/imagen-3.webp" alt="Fairmont Mayakoba – Recámara" loading="lazy"><img src="assets1/proyectos/hoteleria/5-fairmont/imagen-1.webp" alt="Fairmont Mayakoba – Estancia" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/hoteleria/5-fairmont/imagen-7.webp" alt="Fairmont Mayakoba – Spa" loading="lazy"><img src="assets1/proyectos/hoteleria/5-fairmont/imagen-8.webp" alt="Fairmont Mayakoba – Baños" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14b · SABADELL ═══════ -->
+<section class="slide ps" id="s14b">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Sabadell</h2><p class="pl">Mérida, Yucatán</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones para sucursales Sabadell.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/retail/01-sabadell/imagen-4.webp" alt="Sabadell – Sala de juntas" loading="lazy"><img src="assets1/proyectos/retail/01-sabadell/imagen-2.webp" alt="Sabadell – Sala de reuniones" loading="lazy"><img src="assets1/proyectos/retail/01-sabadell/whatsapp-image-2026-05-11-at-2.25.58-pm.webp" alt="Sabadell – Sala y oficina panorámica" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/01-sabadell/imagen-1.webp" alt="Sabadell – Lobby" loading="lazy"><img src="assets1/proyectos/retail/01-sabadell/whatsapp-image-2026-05-11-at-2.25.58-pm-2.webp" alt="Sabadell – Recepción" loading="lazy"><img src="assets1/proyectos/retail/01-sabadell/whatsapp-image-2026-05-07-at-15.19.01-4.webp" alt="Sabadell – Recepción con marca" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/01-sabadell/whatsapp-image-2026-05-11-at-2.25.59-pm-3.webp" alt="Sabadell – Entrada" loading="lazy"><img src="assets1/proyectos/retail/01-sabadell/whatsapp-image-2026-05-07-at-15.19.01-2.webp" alt="Sabadell – Oficina" loading="lazy"><img src="assets1/proyectos/retail/01-sabadell/whatsapp-image-2026-05-11-at-2.25.58-pm-5.webp" alt="Sabadell – Oficina abierta" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S11 · SMART FIT Tultitlán + Pachuca ═══════ -->
+<section class="slide ps" id="s11">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Smart Fit</h2><p class="pl">Tultitlán, CDMX · Pachuca, Hidalgo</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Instalación completa de acabados, instalaciones eléctricas e hidrosanitarias para dos sucursales de la cadena de gimnasios más grande de México.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m2">
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02-smf-tulti/slide11_img1.jpg" alt="Smart Fit – Recepción" loading="lazy">
+      <img src="assets1/proyectos/retail/02-smf-tulti/whatsapp-image-2026-03-20-at-18.16.10.webp" alt="Smart Fit – Área cardio" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02-smf-tulti/slide11_img2.jpg" alt="Smart Fit – Smart Spa" loading="lazy">
+      <img src="assets1/proyectos/retail/02-smf-tulti/whatsapp-image-2026-03-20-at-18.16.12.webp" alt="Smart Fit – Vestidores" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02-smf-tulti/slide11_img3.jpg" alt="Smart Fit – Entrada" loading="lazy">
+      <img src="assets1/proyectos/retail/02-smf-tulti/whatsapp-image-2026-03-20-at-18.16.20.webp" alt="Smart Fit – Área cardio 2" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02-smf-tulti/slide11_img4.jpg" alt="Smart Fit – Área general" loading="lazy">
+      <img src="assets1/proyectos/retail/02-smf-tulti/whatsapp-image-2026-03-20-at-18.16.14-1.webp" alt="Smart Fit – Salón de clases" loading="lazy">
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══════ S12 · SMART FIT Cuernavaca + Cozumel ═══════ -->
+<section class="slide ps" id="s12">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Smart Fit</h2><p class="pl">Cuernavaca, Morelos · Cozumel, México</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Remodelación y adecuación de sucursales Smart Fit en Cuernavaca y Cozumel. Instalaciones eléctricas, acabados y sistemas hidrosanitarios.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m2">
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide12_img2.jpg" alt="Smart Fit – Lockers" loading="lazy">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide11_img6.jpg" alt="Smart Fit – Área equipos" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide12_img4.jpg" alt="Smart Fit – Recepción" loading="lazy">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide12_img3.png" alt="Smart Fit – Panorámica" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide12_img5.jpg" alt="Smart Fit – Cardio" loading="lazy">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide12_img7.jpg" alt="Smart Fit – Zona espejos" loading="lazy">
+    </div>
+    <div class="pf pf-duo">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/slide12_img6.jpg" alt="Smart Fit – Pesas" loading="lazy">
+      <img src="assets1/proyectos/retail/02b-smf-cuerna/whatsapp-image-2026-03-20-at-18.16.22.webp" alt="Smart Fit – Zona spa" loading="lazy">
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14c · SWAROVSKI ═══════ -->
+<section class="slide ps" id="s14c">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Swarovski</h2><p class="pl">Satélite, Edo. Méx.</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones especiales para tienda Swarovski en Plaza Satélite, Estado de México.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/03-swarovski/swarovski-003.webp" alt="Swarovski – Tienda completa" loading="lazy"><img src="assets1/proyectos/retail/03-swarovski/swarovski-007.webp" alt="Swarovski – Vista lateral" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/03-swarovski/swarovski-004.webp" alt="Swarovski – Exhibidores" loading="lazy"><img src="assets1/proyectos/retail/03-swarovski/swarovski-001.webp" alt="Swarovski – Muro octagonal" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/03-swarovski/swarovski-002.webp" alt="Swarovski – Interior vitrinas" loading="lazy"><img src="assets1/proyectos/retail/03-swarovski/swarovski-003.webp" alt="Swarovski – Panorámica" loading="lazy" style="animation-delay:-4s"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14d · LIVERPOOL ═══════ -->
+<section class="slide ps" id="s14d">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Liverpool</h2><p class="pl">CDMX</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción e instalaciones especiales para tiendas departamentales Liverpool en la Ciudad de México.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Construcción &amp; Acabados</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m1">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/04-liverpool/imagen-3.webp" alt="Liverpool – Perfumería" loading="lazy"><img src="assets1/proyectos/retail/04-liverpool/imagen-2.webp" alt="Liverpool – Joyería" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/04-liverpool/imagen-1.webp" alt="Liverpool – Click &amp; Collect" loading="lazy"><img src="assets1/proyectos/retail/04-liverpool/20200318-093317.webp" alt="Liverpool – Línea blanca" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/04-liverpool/20200306-093328.webp" alt="Liverpool – Bodega" loading="lazy"><img src="assets1/proyectos/retail/04-liverpool/imagen-3.webp" alt="Liverpool – Panorámica" loading="lazy" style="animation-delay:-4s"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S13 · PETCO ═══════ -->
+<section class="slide ps" id="s13">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">PETCO</h2><p class="pl">Plaza Jolie, CDMX · Plaza Oriente 39, Puebla</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Remodelación y adecuación de tiendas PETCO en Ciudad de México y Puebla. Acabados interiores, instalaciones eléctricas y sistemas de CCTV.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Remodelación Comercial</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">CCTV &amp; Seguridad</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/retail/05-petco/dynthomuqaatpl6.webp" alt="PETCO – Fachada Express" loading="lazy"><img src="assets1/proyectos/retail/05-petco/img-1427.webp" alt="PETCO – Grooming Salon" loading="lazy" style="object-position:center 40%"><img src="assets1/proyectos/retail/05-petco/img-6385.webp" alt="PETCO – Grooming interior" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/05-petco/img-1477.webp" alt="PETCO – Pasillos" loading="lazy"><img src="assets1/proyectos/retail/05-petco/img-6382.webp" alt="PETCO – Interior" loading="lazy"><img src="assets1/proyectos/retail/05-petco/dsc-0316.webp" alt="PETCO – Muro de acuarios" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/05-petco/img-1219.webp" alt="PETCO – Acuarios" loading="lazy"><img src="assets1/proyectos/retail/05-petco/img-e1429.webp" alt="PETCO – Accesorios" loading="lazy"><img src="assets1/proyectos/retail/05-petco/img-1432.webp" alt="PETCO – Sección acuática" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14 · OFFICE DEPOT + MIYANA ═══════ -->
+<section class="slide ps" id="s14">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Office Depot</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Adecuación de tienda Office Depot en Miyana CDMX y proyectos comerciales en Monterrey, León y Ciudad Victoria.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Adecuación Comercial</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Redes y Telecomunicaciones</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/retail/06-office/slide17_img4.jpg" alt="Office Depot – Fachada" loading="lazy" style="object-position:30% center"><img src="assets1/proyectos/retail/06-office/img-3086.webp" alt="Office Depot – Exterior" loading="lazy"><img src="assets1/proyectos/retail/06-office/dsc-0258.webp" alt="Office Depot – Fachada completa" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/06-office/dsc-0152.webp" alt="Office Depot – Muebles" loading="lazy"><img src="assets1/proyectos/retail/06-office/dsc-0154.webp" alt="Office Depot – Tecnología" loading="lazy"><img src="assets1/proyectos/retail/06-office/imagen-12.webp" alt="Office Depot – Cómputo e impresoras" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/06-office/dsc-0159.webp" alt="Office Depot – Mostrador" loading="lazy"><img src="assets1/proyectos/retail/06-office/imagens-1.webp" alt="Office Depot – Pasillo" loading="lazy"><img src="assets1/proyectos/retail/06-office/dsc-0218.webp" alt="Office Depot – Pasillo interior" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14e · RADIOSHACK ═══════ -->
+<section class="slide ps" id="s14e">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">RadioShack</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Adecuación y remodelación de tiendas RadioShack. Acabados interiores, instalaciones eléctricas y sistemas de iluminación comercial.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Adecuación Comercial</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Iluminación</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/07-radioshack/img-0405.webp" alt="RadioShack – Fachada" loading="lazy"><img src="assets1/proyectos/retail/07-radioshack/whatsapp-image-2019-08-21-at-17.00.17-1.webp" alt="RadioShack – Exterior" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/07-radioshack/img-1439.webp" alt="RadioShack – Interior" loading="lazy"><img src="assets1/proyectos/retail/07-radioshack/img-1438.webp" alt="RadioShack – Exhibidores" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/07-radioshack/whatsapp-image-2019-08-21-at-17.00.18-1.webp" alt="RadioShack – Sucursal" loading="lazy"><img src="assets1/proyectos/retail/07-radioshack/whatsapp-image-2019-08-21-at-17.00.15-1.webp" alt="RadioShack – Fachada lateral" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14f · SCOTIABANK ═══════ -->
+<section class="slide ps" id="s14f">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Scotiabank</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Adecuación y remodelación de espacios corporativos Scotiabank. Acabados interiores, instalaciones eléctricas, aires acondicionados y sistemas contra incendio.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Adecuación Comercial</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Aire Acondicionado</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-09.51.24-4.webp" alt="Scotiabank – Recepción" loading="lazy"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-09.52.58.webp" alt="Scotiabank – Espacio principal" loading="lazy"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-09.52.57-1.webp" alt="Scotiabank – Sala doble altura" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/08-scotiabank/imagen-3.webp" alt="Scotiabank – Elevador" loading="lazy"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-09.52.58-3.webp" alt="Scotiabank – Lobby" loading="lazy"><img src="assets1/proyectos/retail/08-scotiabank/imagen-2.webp" alt="Scotiabank – Elevador de cristal" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-09.52.59-2.webp" alt="Scotiabank – Pasillo" loading="lazy"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-14.29.02.webp" alt="Scotiabank – Equipamiento" loading="lazy"><img src="assets1/proyectos/retail/08-scotiabank/whatsapp-image-2026-05-11-at-09.52.59-5.webp" alt="Scotiabank – Vestíbulo con luminaria" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14g · PLANET FITNESS ═══════ -->
+<section class="slide ps" id="s14g">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Planet Fitness</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Adecuación y remodelación de sucursales Planet Fitness. Acabados interiores, instalaciones hidráulicas, sanitarias y eléctricas.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Adecuación Comercial</div>
+      <div class="scope-tag">Instalaciones Hidrosanitarias</div>
+      <div class="scope-tag">Acabados</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/09-planet-fitness/imagen-1.webp" alt="Planet Fitness – Fachada" loading="lazy"><img src="assets1/proyectos/retail/09-planet-fitness/whatsapp-image-2026-05-11-at-2.26.12-pm.webp" alt="Planet Fitness – Entrada" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/09-planet-fitness/imagen-2.webp" alt="Planet Fitness – Baños" loading="lazy"><img src="assets1/proyectos/retail/09-planet-fitness/whatsapp-image-2026-05-11-at-2.26.13-pm.webp" alt="Planet Fitness – Pasillo" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/09-planet-fitness/whatsapp-image-2026-05-11-at-2.26.14-pm-3.webp" alt="Planet Fitness – Regaderas" loading="lazy"><img src="assets1/proyectos/retail/09-planet-fitness/whatsapp-image-2026-05-11-at-2.26.13-pm-3.webp" alt="Planet Fitness – Duchas" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14h · ELEKTRA ═══════ -->
+<section class="slide ps" id="s14h">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Elektra</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y remodelación de tiendas Elektra. Obra civil, acabados interiores, instalaciones eléctricas e iluminación comercial.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">Acabados Interiores</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/retail/10-elektra/imagen-4.webp" alt="Elektra – Showroom" loading="lazy"><img src="assets1/proyectos/retail/10-elektra/dsc-0099.webp" alt="Elektra – Italika" loading="lazy"><img src="assets1/proyectos/retail/10-elektra/dsc-0087.webp" alt="Elektra – Italika showroom" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/10-elektra/dsc-0118.webp" alt="Elektra – Muebles" loading="lazy"><img src="assets1/proyectos/retail/10-elektra/imagen-1.webp" alt="Elektra – Banco Azteca" loading="lazy"><img src="assets1/proyectos/retail/10-elektra/dsc-0095.webp" alt="Elektra – Banco Azteca oficina" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/retail/10-elektra/dsc-0102.webp" alt="Elektra – Vitrinas" loading="lazy"><img src="assets1/proyectos/retail/10-elektra/imagen-3.webp" alt="Elektra – Transporte" loading="lazy"><img src="assets1/proyectos/retail/10-elektra/elecra.webp" alt="Elektra – Fachada" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14i · MARCHAND PAPELERÍA ═══════ -->
+<section class="slide ps" id="s14i">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Marchand Papelería</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y adecuación de sucursales Marchand Papelería. Obra civil, instalaciones hidrosanitarias, eléctricas y aires acondicionados.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">Instalaciones</div>
+      <div class="scope-tag">HVAC</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/11-marchand/imagen-1.webp" alt="Marchand – Fachada interior" loading="lazy"><img src="assets1/proyectos/retail/11-marchand/imagen-4.webp" alt="Marchand – Fachada exterior" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/11-marchand/imagen-3.webp" alt="Marchand – Interior en obra" loading="lazy"><img src="assets1/proyectos/retail/11-marchand/imagen-1.webp" alt="Marchand – Fachada interior" loading="lazy" style="animation-delay:-4s"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/11-marchand/imagen-4.webp" alt="Marchand – Fachada exterior" loading="lazy"><img src="assets1/proyectos/retail/11-marchand/imagen-3.webp" alt="Marchand – Interior en obra" loading="lazy" style="animation-delay:-4s"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14j · COPPEL ═══════ -->
+<section class="slide ps" id="s14j">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Coppel</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Adecuación y remodelación de tiendas Coppel y BanCoppel. Acabados interiores, instalaciones eléctricas, mobiliario comercial y sistemas de iluminación.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Adecuación Comercial</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Mobiliario</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/12-coppel/imagen-7.webp" alt="Coppel – Fachada" loading="lazy"><img src="assets1/proyectos/retail/12-coppel/imagen-8.webp" alt="Coppel – BanCoppel" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/12-coppel/imagen-3.webp" alt="Coppel – Mostrador" loading="lazy"><img src="assets1/proyectos/retail/12-coppel/imagen-4.webp" alt="Coppel – Interior" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/12-coppel/imagen-1.webp" alt="Coppel – Pasillos" loading="lazy"><img src="assets1/proyectos/retail/12-coppel/imagen-5.webp" alt="Coppel – Exhibidores" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14k · PALACIO DE HIERRO ═══════ -->
+<section class="slide ps" id="s14k">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Palacio de Hierro</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Remodelación y acabados de lujo en tiendas El Palacio de Hierro. Obra civil, acabados premium, iluminación arquitectónica e instalaciones especiales.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Acabados Premium</div>
+      <div class="scope-tag">Iluminación Arquitectónica</div>
+      <div class="scope-tag">Obra Civil</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/13-palacio-de-hierro/imagen-1.webp" alt="Palacio de Hierro – Zapatería de lujo" loading="lazy"><img src="assets1/proyectos/retail/13-palacio-de-hierro/imagen-3.webp" alt="Palacio de Hierro – Burberry" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/13-palacio-de-hierro/imagen-2.webp" alt="Palacio de Hierro – Bolsos y accesorios" loading="lazy"><img src="assets1/proyectos/retail/13-palacio-de-hierro/imagen-4.webp" alt="Palacio de Hierro – Boutique" loading="lazy" style="animation-delay:-4s"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/13-palacio-de-hierro/imagen-4.webp" alt="Palacio de Hierro – Boutique" loading="lazy"><img src="assets1/proyectos/retail/13-palacio-de-hierro/imagen-1.webp" alt="Palacio de Hierro – Zapatería de lujo" loading="lazy" style="animation-delay:-4s"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S14l · VERA ═══════ -->
+<section class="slide ps" id="s14l">
+  <div class="ps-spine">Retail</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Vera</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y adecuación de restaurante Vera. Obra civil, acabados especiales, instalaciones hidrosanitarias, eléctricas y mobiliario artesanal.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">Acabados Especiales</div>
+      <div class="scope-tag">Instalaciones</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/retail/14-vera/vera-1.jpeg" alt="Vera – Salón principal" loading="lazy"><img src="assets1/proyectos/retail/14-vera/vera-2.jpeg" alt="Vera – Mural y barra" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/14-vera/vera-3.jpeg" alt="Vera – Fuente de cantera" loading="lazy"><img src="assets1/proyectos/retail/14-vera/vera-4.jpeg" alt="Vera – Interior en obra" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/retail/14-vera/imagen-42.webp" alt="Vera – Pasillo tapizado" loading="lazy"><img src="assets1/proyectos/retail/14-vera/imagen-25.webp" alt="Vera – Pasillo y fuente" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S15 · FORD ═══════ -->
+<section class="slide ps" id="s15">
+  <div class="ps-spine">Industria</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Ford</h2><p class="pl">Cuautitlán Izcalli, Edo. Méx.</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Instalaciones eléctricas, acabados y automatización industrial para planta Ford en Cuautitlán Izcalli, Estado de México.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Instalaciones Industriales</div>
+      <div class="scope-tag">Automatización</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-duo"><img src="assets1/proyectos/industria/ford/imagen-1.webp" alt="Ford – Construcción de planta" loading="lazy"><img src="assets1/proyectos/industria/ford/imagen-9.webp" alt="Ford – Cimentación" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/industria/ford/imagen-2.webp" alt="Ford – Interior de nave" loading="lazy"><img src="assets1/proyectos/industria/ford/imagen-7.webp" alt="Ford – Estructura metálica" loading="lazy"></div>
+    <div class="pf pf-duo"><img src="assets1/proyectos/industria/ford/imagen-12.webp" alt="Ford – Nave industrial" loading="lazy"><img src="assets1/proyectos/industria/ford/imagen-15.webp" alt="Ford – Edificio terminado" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S15b · PROLOGIS ═══════ -->
+<section class="slide ps" id="s15b">
+  <div class="ps-spine">Industria</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn pn-solo">Prologis</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y adecuación de parques logísticos e industriales Prologis. Obra civil, fachadas panel, andenes de carga, instalaciones eléctricas e hidrosanitarias.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">Fachadas Panel</div>
+      <div class="scope-tag">Instalaciones</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/industria/prologis/imagen-71.webp" alt="Prologis – Fachada oficinas UPS" loading="lazy"><img src="assets1/proyectos/industria/prologis/imagen-66.webp" alt="Prologis – Fachada con ventanales" loading="lazy"><img src="assets1/proyectos/industria/prologis/imagen-58.webp" alt="Prologis – Fachada y andenes al atardecer" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/industria/prologis/imagen-70.webp" alt="Prologis – Andenes de carga" loading="lazy"><img src="assets1/proyectos/industria/prologis/imagen-92.webp" alt="Prologis – Nave panorámica" loading="lazy"><img src="assets1/proyectos/industria/prologis/imagen-62.webp" alt="Prologis – Andenes terminados" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/industria/prologis/imagen-42.webp" alt="Prologis – Instalación de fachada" loading="lazy"><img src="assets1/proyectos/industria/prologis/imagen-47.webp" alt="Prologis – Entrada con marquesina" loading="lazy"><img src="assets1/proyectos/industria/prologis/imagen-14.webp" alt="Prologis – Instalación de marquesina" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S16 · CFE ═══════ -->
+<section class="slide ps" id="s16">
+  <div class="ps-spine">Obra Pública</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn" style="font-size:clamp(2.4rem,6vw,5rem)">CFE</h2><p class="pl">Ciudad de México</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Instalaciones especializadas en CFE World Trade Center.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Voz y Datos</div>
+      <div class="scope-tag">CCTV &amp; Seguridad</div>
+      <div class="scope-tag">Automatización</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/obra-publica/cfe/dsc02398.webp" alt="CFE – Fachada nocturna" loading="lazy"><img src="assets1/proyectos/obra-publica/cfe/0.webp" alt="CFE – Kioscos Mático" loading="lazy"><img src="assets1/proyectos/obra-publica/cfe/dsc02440.webp" alt="CFE – Kioscos de autoservicio" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/cfe/00.webp" alt="CFE – Sala Mático panorámica" loading="lazy"><img src="assets1/proyectos/obra-publica/cfe/2.webp" alt="CFE – Oficinas" loading="lazy"><img src="assets1/proyectos/obra-publica/cfe/dsc02436.webp" alt="CFE – Sala principal con letrero" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/cfe/1-ok.webp" alt="CFE – Acceso interior" loading="lazy"><img src="assets1/proyectos/obra-publica/cfe/6.webp" alt="CFE – Vestíbulo y torniquetes" loading="lazy"><img src="assets1/proyectos/obra-publica/cfe/dsc02371.webp" alt="CFE – Oficina con branding" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S16b · CINVESTAV ═══════ -->
+<section class="slide ps" id="s16b">
+  <div class="ps-spine">Obra Pública</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn" style="font-size:clamp(2.4rem,6vw,5rem)">CINVESTAV</h2><p class="pl">Ciudad de México</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y adecuación del Centro de Investigación y de Estudios Avanzados del IPN. Obra civil, laboratorios especializados, auditorio e instalaciones.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">Laboratorios</div>
+      <div class="scope-tag">Instalaciones Especiales</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-3.webp" alt="CINVESTAV – Fachada auditorio" loading="lazy"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-14.webp" alt="CINVESTAV – Laboratorio doble altura" loading="lazy"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-10.webp" alt="CINVESTAV – Acceso con torniquetes" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-13.webp" alt="CINVESTAV – Laboratorio especializado" loading="lazy"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-1.webp" alt="CINVESTAV – Auditorio" loading="lazy"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-15.webp" alt="CINVESTAV – Laboratorio con muros de cristal" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-5.webp" alt="CINVESTAV – Edificio terminado" loading="lazy"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-7.webp" alt="CINVESTAV – Construcción" loading="lazy"><img src="assets1/proyectos/obra-publica/cinvestav/imagen-12.webp" alt="CINVESTAV – Interior amplio" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S16c · CENTRO HOSPITALARIO NAVAL ═══════ -->
+<section class="slide ps" id="s16c">
+  <div class="ps-spine">Obra Pública</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Centro Hospitalario<br>Naval</h2><p class="pl">Ciudad de México</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Instalaciones especializadas en el Centro Hospitalario Naval. Sistemas HVAC hospitalarios, instalaciones eléctricas, voz y datos, y equipamiento de quirófanos.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">HVAC Hospitalario</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Voz y Datos</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-1.webp" alt="Hospital Naval – Quirófano" loading="lazy"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-2.webp" alt="Hospital Naval – Sala quirúrgica" loading="lazy"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-9.webp" alt="Hospital Naval – Tablero eléctrico" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-3.webp" alt="Hospital Naval – Cuarto de máquinas" loading="lazy"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-4.webp" alt="Hospital Naval – Data center" loading="lazy"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-7.webp" alt="Hospital Naval – UMA Trane" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-5.webp" alt="Hospital Naval – Montaje HVAC" loading="lazy"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-6.webp" alt="Hospital Naval – Equipo Daikin" loading="lazy"><img src="assets1/proyectos/obra-publica/hospitalario-naval/imagen-8.webp" alt="Hospital Naval – Maniobra con grúa" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S16d · AEROPUERTO Y SERVICIOS AUXILIARES (ASA) ═══════ -->
+<section class="slide ps" id="s16d">
+  <div class="ps-spine">Obra Pública</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn">Aeropuerto y Servicios<br>Auxiliares (ASA)</h2><p class="pl">Ciudad de México</p></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y adecuación de instalaciones aeroportuarias para ASA. Obra civil, acabados, instalaciones eléctricas, hidrosanitarias y aire acondicionado.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">Acabados</div>
+      <div class="scope-tag">Instalaciones</div>
+      <div class="scope-tag">HVAC</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/obra-publica/asa/imagen-1.webp" alt="ASA – Fachada con logo" loading="lazy"><img src="assets1/proyectos/obra-publica/asa/imagen-2.webp" alt="ASA – Fachada con torre de control" loading="lazy"><img src="assets1/proyectos/obra-publica/asa/imagen-7.webp" alt="ASA – Oficina ejecutiva" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/asa/imagen-3.webp" alt="ASA – Edificio exterior" loading="lazy"><img src="assets1/proyectos/obra-publica/asa/imagen-4.webp" alt="ASA – Vestíbulo interior" loading="lazy"><img src="assets1/proyectos/obra-publica/asa/imagen-8.webp" alt="ASA – Sala de juntas" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/asa/imagen-5.webp" alt="ASA – Oficinas" loading="lazy"><img src="assets1/proyectos/obra-publica/asa/imagen-6.webp" alt="ASA – Salón de eventos" loading="lazy"><img src="assets1/proyectos/obra-publica/asa/imagen-9.webp" alt="ASA – Vestíbulo nocturno" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S16e · IMSS ═══════ -->
+<section class="slide ps" id="s16e">
+  <div class="ps-spine">Obra Pública</div>
+  <div class="pi">
+    <div class="rv" style="transition-delay:.1s"><h2 class="pn" style="font-size:clamp(2.4rem,6vw,5rem)">IMSS</h2></div>
+    <p class="pd rv" style="transition-delay:.2s">Construcción y adecuación de clínicas y unidades médicas del IMSS. Obra civil, acabados, instalaciones eléctricas, HVAC, equipamiento médico y señalización hospitalaria.</p>
+    <div class="ps-scope rv" style="transition-delay:.3s">
+      <div class="scope-tag">Obra Civil</div>
+      <div class="scope-tag">HVAC</div>
+      <div class="scope-tag">Instalaciones Eléctricas</div>
+      <div class="scope-tag">Equipamiento</div>
+    </div>
+    <div class="ps-wave"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+  </div>
+  <div class="pp"><div class="m3">
+    <div class="pf ph pf-trio"><img src="assets1/proyectos/obra-publica/imss/imagen-1.webp" alt="IMSS – Vestíbulo consultorios panorámica" loading="lazy"><img src="assets1/proyectos/obra-publica/imss/imagen-2.webp" alt="IMSS – Pasillo consultorios" loading="lazy"><img src="assets1/proyectos/obra-publica/imss/imagen-7.webp" alt="IMSS – Interior consultorios" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/imss/imagen-3.webp" alt="IMSS – Sala de espera" loading="lazy"><img src="assets1/proyectos/obra-publica/imss/imagen-4.webp" alt="IMSS – Consultorio médico" loading="lazy"><img src="assets1/proyectos/obra-publica/imss/imagen-8.webp" alt="IMSS – Transformador eléctrico" loading="lazy"></div>
+    <div class="pf pf-trio"><img src="assets1/proyectos/obra-publica/imss/imagen-5.webp" alt="IMSS – Equipo HVAC Daikin" loading="lazy"><img src="assets1/proyectos/obra-publica/imss/imagen-6.webp" alt="IMSS – Montaje de equipo" loading="lazy"><img src="assets1/proyectos/obra-publica/imss/imagen-9.webp" alt="IMSS – Switchgear eléctrico" loading="lazy"></div>
+  </div></div>
+</section>
+
+<!-- ═══════ S17 · CIERRE ═══════ -->
+<section class="slide" id="s17">
+  <div class="close-iza rv">Z&amp;CA<br><span>CONSTRUCCIONES, INFRAESTRUCTURA E INGENIERÍA</span></div>
+  <p class="close-sub rv" style="transition-delay:.2s">"0 contratos inconclusos. 0 reclamaciones.<br>100% compromisos logrados. Punto."</p>
+  <p class="close-co rv" style="transition-delay:.4s">Grupo Z&amp;M · Dossier 2026</p>
+  <div class="zm-logo-wrap rv" style="transition-delay:.6s">
+    <a href="https://zymcorp.com" target="_blank" rel="noopener">
+      <img src="assets1/qr/qr_zca.png" alt="QR Code - zymcorp.com" style="width:100%; border-radius:8px;">
+    </a>
+    <svg class="qr-logo-overlay" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="qr-ring-gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0D2B52"/><stop offset="35%" stop-color="#3B82C4"/><stop offset="65%" stop-color="#1A4F8C"/><stop offset="100%" stop-color="#0D2B52"/></linearGradient>
+        <linearGradient id="qr-cg" gradientUnits="userSpaceOnUse" x1="50" y1="15" x2="50" y2="85"><stop offset="0%" stop-color="#1A4F8C" stop-opacity="1"/><stop offset="60%" stop-color="#1A4F8C" stop-opacity=".3"/><stop offset="100%" stop-color="#1A4F8C" stop-opacity="0"/></linearGradient>
+        <linearGradient id="qr-cn" gradientUnits="userSpaceOnUse" x1="50" y1="22" x2="50" y2="78"><stop offset="0%" stop-color="#0D2B52" stop-opacity="1"/><stop offset="60%" stop-color="#0D2B52" stop-opacity=".3"/><stop offset="100%" stop-color="#0D2B52" stop-opacity="0"/></linearGradient>
+        <linearGradient id="qr-cb" gradientUnits="userSpaceOnUse" x1="50" y1="29" x2="50" y2="71"><stop offset="0%" stop-color="#3B82C4" stop-opacity="1"/><stop offset="60%" stop-color="#3B82C4" stop-opacity=".3"/><stop offset="100%" stop-color="#3B82C4" stop-opacity="0"/></linearGradient>
+      </defs>
+      <g class="ring-rotate">
+        <circle class="ring-glow" cx="50" cy="50" r="44" fill="none" stroke="url(#qr-ring-gr)" stroke-width="1.5"/>
+      </g>
+      <g class="orbit">
+        <path d="M50 85 A35 35 0 0 1 50 15" fill="none" stroke="url(#qr-cg)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="50" cy="15" r="1.8" fill="#1A4F8C"/>
+        <path d="M50 78 A28 28 0 0 1 50 22" fill="none" stroke="url(#qr-cn)" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="50" cy="22" r="1.5" fill="#0D2B52"/>
+        <path d="M50 71 A21 21 0 0 1 50 29" fill="none" stroke="url(#qr-cb)" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="50" cy="29" r="1.3" fill="#3B82C4"/>
+      </g>
+      <text x="50" y="47" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="4" font-weight="400" letter-spacing="1.5" fill="#888">GRUPO</text>
+      <text x="50" y="57" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="500" letter-spacing=".5" fill="#1B2A4A">Z<tspan fill="#C62828">&amp;</tspan>M</text>
+    </svg>
+  </div>
+  <div class="wave-wrap"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl1"><path d="M0,80 C240,120 480,40 720,80 C960,120 1200,40 1440,80 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.25"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl2"><path d="M0,90 C280,50 560,110 840,70 C1120,30 1300,100 1440,90 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.45"/></svg><svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="wl3"><path d="M0,100 C320,80 640,115 960,95 C1280,75 1380,110 1440,100 L1440,120 L0,120Z" fill="#1A4F8C" opacity="0.7"/></svg></div>
+</section>
+
+<script>
+/* Simple presentation — native scroll, no hijacking */
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const pb = document.getElementById('pb');
+  const pn = document.getElementById('pn');
+  const nd = document.getElementById('nd');
+  const total = slides.length;
+
+  /* Build nav dots */
+  const dots = slides.map((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'nav-dot';
+    b.setAttribute('aria-label', `Slide ${i + 1}`);
+    b.addEventListener('click', () => {
+      slides[i].scrollIntoView({ behavior: 'smooth' });
+    });
+    nd.appendChild(b);
+    return b;
+  });
+
+  /* Observe slides for visibility */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        const i = slides.indexOf(e.target);
+        if (i >= 0) {
+          pb.style.width = ((i + 1) / total * 100) + '%';
+          pn.textContent = (i + 1) + ' / ' + total;
+          dots.forEach((d, j) => d.classList.toggle('active', j === i));
+        }
+      } else {
+        e.target.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(s => obs.observe(s));
+
+  /* Contents links */
+  document.querySelectorAll('[data-go]').forEach(el => {
+    el.addEventListener('click', () => {
+      const t = document.getElementById(el.dataset.go);
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+
+  /* S7 — Transición categorías clientes */
+  document.querySelectorAll('.s7-cat').forEach(cat => {
+    cat.addEventListener('click', () => {
+      const spine = cat.parentElement;
+      const section = spine.closest('.slide');
+      const id = cat.dataset.cat;
+      spine.querySelectorAll('.s7-cat').forEach(c => c.classList.remove('on'));
+      cat.classList.add('on');
+      section.querySelectorAll('.client-col').forEach(col => col.classList.remove('active'));
+      const target = section.querySelector(`.client-col[data-col="${id}"]`);
+      if (target) setTimeout(() => target.classList.add('active'), 50);
+      const tagHot = section.querySelector('#tag-hot');
+      if (tagHot) tagHot.style.display = (id === 'hot') ? '' : 'none';
+    });
+  });
+
+  /* S8 — Mapa interactivo (desde nombres de estado) */
+  (function(){
+    const container = document.getElementById('mexicoMapContainer');
+    if (!container) return;
+    const svg = container.querySelector('svg');
+    if (!svg) return;
+    const stateItems = document.querySelectorAll('.state-item[data-state]');
+
+    function getStatePaths(stateId) {
+      const paths = [svg.querySelector('#' + stateId)];
+      if (stateId === 'veracruz') {
+        const vFull = svg.querySelector('#veracruz-de-ignacio-de-la-llave');
+        if (vFull) paths.push(vFull);
+      }
+      return paths.filter(Boolean);
+    }
+
+    function highlight(stateId) {
+      getStatePaths(stateId).forEach(p => p.classList.add('active'));
+    }
+
+    function unhighlight() {
+      svg.querySelectorAll('path.active').forEach(p => p.classList.remove('active'));
+      stateItems.forEach(s => s.classList.remove('on'));
+    }
+
+    stateItems.forEach(item => {
+      const stateId = item.dataset.state;
+      item.addEventListener('mouseenter', () => { unhighlight(); item.classList.add('on'); highlight(stateId); });
+      item.addEventListener('mouseleave', () => { unhighlight(); });
+      item.addEventListener('click', () => {
+        const isOn = item.classList.contains('on') && svg.classList.contains('hovered');
+        unhighlight();
+        if (!isOn) { item.classList.add('on'); highlight(stateId); }
+      });
+    });
+  })();
+
+  /* Init */
+  slides[0].classList.add('visible');
+});
+</script>
+</body>
+</html>
